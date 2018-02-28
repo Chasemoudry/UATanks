@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05fe6c27a4eea3544846140cac8c8866, type: 3}
   m_Name: Player Ship
   m_EditorClassIdentifier: 
-  forwardSpeed: 20
-  reverseSpeed: 5
-  rotateSpeed: 20
+  forwardSpeed: 6
+  reverseSpeed: 3
+  rotateSpeed: 2
   projectileForce: 10
   projectileDamage: 10
   timeBetweenShots: 1

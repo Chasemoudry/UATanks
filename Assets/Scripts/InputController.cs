@@ -9,41 +9,49 @@ public class InputController : MonoBehaviour
     private delegate void FireButton();
 
     private CharacterController controller;
+    private Transform tf;
+    private Ray heightRay;
 
     private void Awake()
     {
-        this.controller = GetComponent<CharacterController>();
+        this.controller = this.GetComponent<CharacterController>();
+        this.tf = this.GetComponent<Transform>();
     }
 
     private void OnEnable()
     {
-        this.StartCoroutine(MovementInput());
+        this.StartCoroutine("ReadMovement");
     }
 
     private void OnDisable()
     {
-        this.StopAllCoroutines();
+        this.StopCoroutine("ReadMovement");
     }
 
-    private IEnumerator MovementInput()
+    private IEnumerator ReadMovement()
     {
         while (true)
         {
-            float horzMove = Input.GetAxis("Horizontal");
-            float vertMove = Input.GetAxis("Vertical");
+            float horzAxis = Input.GetAxis("Horizontal");
+            float vertAxis = Input.GetAxis("Vertical");
 
-            if (vertMove > 0)
+            if (vertAxis > 0)
             {
-                horzMove *= this.data.ForwardSpeed * Time.deltaTime;
-                vertMove *= this.data.ForwardSpeed * Time.deltaTime;
+                vertAxis *= this.data.ForwardSpeed;
             }
             else
             {
-                horzMove *= this.data.ReverseSpeed * Time.deltaTime;
-                vertMove *= this.data.ReverseSpeed * Time.deltaTime;
+                vertAxis *= this.data.ReverseSpeed;
             }
 
-            this.controller.SimpleMove(new Vector3(horzMove, 0, vertMove));
+            this.heightRay = new Ray(this.tf.position, Vector3.down);
+
+            if (Physics.Raycast(this.heightRay, this.controller.radius + 0.1f))
+            {
+                this.tf.Rotate(0, horzAxis * this.data.ReverseSpeed * Time.deltaTime, 0);
+            }
+
+            this.controller.SimpleMove(vertAxis * this.tf.forward);
 
             yield return null;
         }

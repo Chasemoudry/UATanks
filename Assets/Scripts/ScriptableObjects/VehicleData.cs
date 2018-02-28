@@ -22,12 +22,12 @@ public class VehicleData : ScriptableObject
     public int VehicleWorth { get { return this.vehicleWorth; } set { this.vehicleWorth = value; } }
 
     [Header("Movement Settings")]
-    [SerializeField, Range(1, 20)]
-    private float forwardSpeed = 10;
-    [SerializeField, Range(1, 20)]
-    private float reverseSpeed = 5;
-    [SerializeField, Range(5, 90)]
-    private int rotateSpeed = 20;
+    [SerializeField, Range(1, 10)]
+    private float forwardSpeed = 6;
+    [SerializeField, Range(1, 10)]
+    private float reverseSpeed = 3;
+    [SerializeField, Range(2, 30)]
+    private int rotateSpeed = 10;
 
     [Header("Projectile Settings")]
     [SerializeField, Range(1, 20)]
