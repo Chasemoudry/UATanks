@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Data Objects/Vehicle Data")]
 public class VehicleData : ScriptableObject
@@ -26,8 +24,8 @@ public class VehicleData : ScriptableObject
     private float forwardSpeed = 6;
     [SerializeField, Range(1, 10)]
     private float reverseSpeed = 3;
-    [SerializeField, Range(2, 30)]
-    private int rotateSpeed = 10;
+    [SerializeField, Range(2, 90)]
+    private int rotateSpeed = 60;
 
     [Header("Projectile Settings")]
     [SerializeField, Range(1, 20)]

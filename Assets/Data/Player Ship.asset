@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forwardSpeed: 6
   reverseSpeed: 3
-  rotateSpeed: 2
+  rotateSpeed: 60
   projectileForce: 10
   projectileDamage: 10
   timeBetweenShots: 1

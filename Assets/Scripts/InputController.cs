@@ -3,14 +3,17 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
+    public delegate void InputEvent();
+
+    [Header("Movement Data")]
     [SerializeField]
     private VehicleData data;
 
-    private delegate void FireButton();
+    public InputEvent action_Primary = () => { };
+    public InputEvent action_Secondary = () => { };
 
     private CharacterController controller;
     private Transform tf;
-    private Ray heightRay;
 
     private void Awake()
     {
@@ -20,40 +23,48 @@ public class InputController : MonoBehaviour
 
     private void OnEnable()
     {
-        this.StartCoroutine("ReadMovement");
+        this.StartCoroutine("ReadInput");
     }
 
     private void OnDisable()
     {
-        this.StopCoroutine("ReadMovement");
+        this.StopCoroutine("ReadInput");
     }
 
-    private IEnumerator ReadMovement()
+    private IEnumerator ReadInput()
     {
         while (true)
         {
-            float horzAxis = Input.GetAxis("Horizontal");
-            float vertAxis = Input.GetAxis("Vertical");
+            this.CalculateMovement();
 
-            if (vertAxis > 0)
+            if (Input.GetButtonDown("Primary Action"))
             {
-                vertAxis *= this.data.ForwardSpeed;
+                this.action_Primary();
             }
-            else
+            else if (Input.GetButtonDown("Secondary Action"))
             {
-                vertAxis *= this.data.ReverseSpeed;
+                this.action_Secondary();
             }
-
-            this.heightRay = new Ray(this.tf.position, Vector3.down);
-
-            if (Physics.Raycast(this.heightRay, this.controller.radius + 0.1f))
-            {
-                this.tf.Rotate(0, horzAxis * this.data.ReverseSpeed * Time.deltaTime, 0);
-            }
-
-            this.controller.SimpleMove(vertAxis * this.tf.forward);
 
             yield return null;
         }
+    }
+
+    private void CalculateMovement()
+    {
+        float horzAxis = Input.GetAxis("Horizontal");
+        float vertAxis = Input.GetAxis("Vertical");
+
+        if (vertAxis > 0)
+        {
+            vertAxis *= this.data.ForwardSpeed;
+        }
+        else
+        {
+            vertAxis *= this.data.ReverseSpeed;
+        }
+
+        this.tf.Rotate(0, horzAxis * this.data.RotateSpeed * Time.deltaTime, 0);
+        this.controller.SimpleMove(vertAxis * this.tf.forward);
     }
 }
