@@ -1,8 +1,5 @@
-using UnityEngine;
-using UnityEditor;
 using System.IO;
 using System.Text;
-using System.Collections;
 using System.Text.RegularExpressions;
 
 namespace ProBuilder2.EditorCommon

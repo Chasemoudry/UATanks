@@ -1,10 +1,9 @@
 using UnityEditor;
 using UnityEngine;
-using System.Collections.Generic;
 
 namespace Cinemachine.Editor
 {
-    [CustomEditor(typeof(CinemachineClearShot))]
+	[CustomEditor(typeof(CinemachineClearShot))]
     internal sealed class CinemachineClearShotEditor 
         : CinemachineVirtualCameraBaseEditor<CinemachineClearShot>
     {

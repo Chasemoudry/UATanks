@@ -1,8 +1,4 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System.Collections;
-using ProBuilder2.Common;
-using ProBuilder2.EditorCommon;
+﻿using UnityEditor;
 
 namespace ProBuilder2.Actions
 {

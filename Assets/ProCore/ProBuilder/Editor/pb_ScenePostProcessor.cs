@@ -2,7 +2,6 @@
 using UnityEditor;
 using UnityEditor.Callbacks;
 using ProBuilder2.Common;
-using ProBuilder2.MeshOperations;
 using System.Linq;
 
 namespace ProBuilder2.EditorCommon

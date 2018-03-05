@@ -3,15 +3,7 @@
  * are available in the project.
  */
 
-using UnityEngine;
 using UnityEditor;
-using ProBuilder2.Common;
-using ProBuilder2.EditorCommon;
-using ProBuilder2.MeshOperations;
-using System.Collections.Generic;
-using System;
-using System.Linq;
-using System.Reflection;
 #if PROBUILDER_FBX_ENABLED
 using Unity.FbxSdk;
 using FbxExporters;

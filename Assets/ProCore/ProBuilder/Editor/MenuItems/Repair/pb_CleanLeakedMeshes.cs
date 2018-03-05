@@ -2,8 +2,6 @@
 #define UNITY_5
 #endif
 
-using UnityEngine;
-using System.Collections;
 using UnityEditor;
 using ProBuilder2.Common;
 

@@ -3,22 +3,25 @@
 [CreateAssetMenu(menuName = "Data Objects/Projectile Data")]
 public class ProjectileData : ScriptableObject
 {
-    public float ProjectileForce { get { return this.projectileForce; } }
+	public GameObject Prefab { get { return this.prefab; } }
 
-    public float ProjectileDamage { get { return this.projectileDamage; } }
+	public float ProjectileForce { get { return this.projectileForce; } }
 
-    public float TimeBetweenShots { get { return this.timeBetweenShots; } }
+	public float ProjectileDamage { get { return this.projectileDamage; } }
 
-    public float ProjectileTimeout { get { return this.projectileTimeout; } }
+	public float FireRate { get { return this.fireRate; } }
 
-    [Header("Projectile Settings")]
-    [SerializeField, Range(1, 20)]
-    private float projectileForce = 10;
-    [SerializeField, Range(0, 20)]
-    private float projectileDamage = 10;
-    [SerializeField, Range(0, 10)]
-    private float timeBetweenShots = 1;
+	public float TimeoutDuration { get { return this.timeoutDuration; } }
 
-    [SerializeField, Range(1, 5)]
-    private float projectileTimeout = 3;
+	[Header("Projectile Settings")]
+	[SerializeField]
+	private GameObject prefab;
+	[SerializeField, Range(1, 20)]
+	private float projectileForce = 10;
+	[SerializeField, Range(0, 20)]
+	private float projectileDamage = 10;
+	[SerializeField, Range(0, 10)]
+	private float fireRate = 1;
+	[SerializeField, Range(1, 5)]
+	private float timeoutDuration = 3;
 }

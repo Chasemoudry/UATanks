@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Cinemachine.Utility
 {
-    internal class PositionPredictor
+	internal class PositionPredictor
     {
         Vector3 m_Position;
 

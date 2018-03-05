@@ -1,10 +1,9 @@
 ﻿#if UNITY_EDITOR || UNITY_STANDALONE
 
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using ProBuilder2.Common;
-using ProBuilder2.MeshOperations;	// Extrude lives here
+using ProBuilder2.MeshOperations;   // Extrude lives here
 using System.Linq;
 
 /**

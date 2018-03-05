@@ -1,8 +1,5 @@
 #if !PROTOTYPE
-using UnityEngine;
 using UnityEditor;
-using System.Collections;
-using ProBuilder2.EditorCommon;
 
 namespace ProBuilder2.Actions
 {

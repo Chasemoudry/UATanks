@@ -1,12 +1,5 @@
 #if !PROTOTYPE
-using UnityEngine;
 using UnityEditor;
-using System.Collections;
-using System.Collections.Generic;
-using ProBuilder2.Common;
-using ProBuilder2.EditorCommon;
-using ProBuilder2.MeshOperations;
-using System.Linq;
 
 namespace ProBuilder2.Actions
 {

@@ -2,12 +2,7 @@
 *  @ Matt1988
 *  This extension was built by @Matt1988
 */
-using UnityEngine;
 using UnityEditor;
-using System.Collections;
-using System.Collections.Generic;
-using ProBuilder2.Common;
-using ProBuilder2.EditorCommon;
 
 namespace ProBuilder2.Actions
 {

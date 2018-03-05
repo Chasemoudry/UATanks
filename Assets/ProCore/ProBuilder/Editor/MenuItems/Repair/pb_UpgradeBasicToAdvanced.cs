@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System.Collections;
 using ProBuilder2.EditorCommon;
 using System.Linq;
 using ProBuilder2.Common;

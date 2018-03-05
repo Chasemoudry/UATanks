@@ -1,13 +1,12 @@
 using UnityEngine;
 using UnityEditor;
-using System;
 
 namespace Cinemachine.Editor
 {
-    /// <summary>
-    /// Helper for drawing embedded asset editors
-    /// </summary>
-    public class EmbeddeAssetEditor<T> where T : ScriptableObject
+	/// <summary>
+	/// Helper for drawing embedded asset editors
+	/// </summary>
+	public class EmbeddeAssetEditor<T> where T : ScriptableObject
     {
         /// <summary>
         /// Create in OnEnable()

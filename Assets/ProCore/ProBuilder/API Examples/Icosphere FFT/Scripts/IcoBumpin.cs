@@ -1,6 +1,5 @@
 ﻿#if UNITY_EDITOR || UNITY_STANDALONE
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ProBuilder2.Common;
