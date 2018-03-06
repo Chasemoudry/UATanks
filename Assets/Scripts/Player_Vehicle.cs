@@ -1,12 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Player_Vehicle : MonoBehaviour, IVehicle
 {
 	public VehicleData Data { get { return this.data; } }
-	public EventManager.BasicEvent Action_Primary { get; set; }
-	public EventManager.BasicEvent Action_Secondary { get; set; }
-	public EventManager.BasicEvent Event_OnDeath { get; set; }
+
+	public event Action Action_Primary;
+	public event Action Action_Secondary;
+	public event Action Event_Death;
 
 	[Header("Movement Data")]
 	[SerializeField]
@@ -19,23 +21,24 @@ public class Player_Vehicle : MonoBehaviour, IVehicle
 	{
 		this.controller = this.GetComponent<CharacterController>();
 		this.tf = this.GetComponent<Transform>();
-
-		this.Action_Primary = () => { };
-		this.Action_Secondary = () => { };
-		this.Event_OnDeath = () => { EventManager.OnPlayerDeath(); };
 	}
 
 	private void OnEnable()
 	{
-		this.StartCoroutine("ReadInput");
+		this.StartCoroutine("MovementInput");
 	}
 
 	private void OnDisable()
 	{
-		this.StopCoroutine("ReadInput");
+		this.StopCoroutine("MovementInput");
 	}
 
-	private IEnumerator ReadInput()
+	private void OnPlayerDeath()
+	{
+		this.StopCoroutine("MovementInput");
+	}
+
+	private IEnumerator MovementInput()
 	{
 		while (true)
 		{
@@ -43,11 +46,17 @@ public class Player_Vehicle : MonoBehaviour, IVehicle
 
 			if (Input.GetButtonDown("Primary Action"))
 			{
-				this.Action_Primary();
+				if (this.Action_Primary != null)
+				{
+					this.Action_Primary();
+				}
 			}
 			else if (Input.GetButtonDown("Secondary Action"))
 			{
-				this.Action_Secondary();
+				if (this.Action_Secondary != null)
+				{
+					this.Action_Secondary();
+				}
 			}
 
 			yield return null;

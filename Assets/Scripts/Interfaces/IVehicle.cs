@@ -1,7 +1,7 @@
 ﻿public interface IVehicle
 {
 	VehicleData Data { get; }
-	EventManager.BasicEvent Action_Primary { get; set; }
-	EventManager.BasicEvent Action_Secondary { get; set; }
-	EventManager.BasicEvent Event_OnDeath { get; set; }
+	event System.Action Action_Primary;
+	event System.Action Action_Secondary;
+	event System.Action Event_Death;
 }

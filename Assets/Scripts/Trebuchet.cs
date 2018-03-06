@@ -11,12 +11,12 @@ public class Trebuchet : MonoBehaviour, IProjectileWeapon
 	private float launchAngle = 45f;
 
 	private Animator animator;
-	private new Rigidbody rigidbody;
+	private CharacterController charControl;
 
 	private void Awake()
 	{
 		this.animator = this.GetComponent<Animator>();
-		this.rigidbody = this.GetComponent<Rigidbody>();
+		this.charControl = this.GetComponent<CharacterController>();
 	}
 
 	private void OnEnable()
@@ -50,12 +50,14 @@ public class Trebuchet : MonoBehaviour, IProjectileWeapon
 		Vector3 launchVector = new Vector3(
 			Mathf.Cos(launchRadians) * this.transform.forward.x,
 			Mathf.Sin(launchRadians),
-			Mathf.Cos(launchRadians) * this.transform.forward.z) * this.data.ProjectileForce + this.rigidbody.velocity;
+			Mathf.Cos(launchRadians) * this.transform.forward.z) * this.data.ProjectileForce + this.charControl.velocity;
 
-		Debug.Log(this.transform.rotation.eulerAngles.x + this.launchAngle
-			+ " 2d: " + (new Vector3(Mathf.Cos(launchRadians), Mathf.Sin(launchRadians), 0))
+#if UNITY_EDITOR
+		Debug.Log("Angle: " + this.transform.rotation.eulerAngles.x + this.launchAngle
+			+ " 2D: " + (new Vector3(Mathf.Cos(launchRadians), Mathf.Sin(launchRadians), 0))
 			+ " forward: " + this.transform.forward
 			+ " total: " + launchVector);
+#endif
 
 		// OPTION: Instantiate from object pool
 		Instantiate(this.data.Prefab, this.launchPosition.position, Quaternion.identity)
