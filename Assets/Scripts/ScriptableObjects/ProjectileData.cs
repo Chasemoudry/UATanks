@@ -7,7 +7,7 @@ public class ProjectileData : ScriptableObject
 
 	public float ProjectileForce { get { return this.projectileForce; } }
 
-	public float ProjectileDamage { get { return this.projectileDamage; } }
+	public int ProjectileDamage { get { return this.projectileDamage; } }
 
 	public float FireRate { get { return this.fireRate; } }
 
@@ -19,7 +19,7 @@ public class ProjectileData : ScriptableObject
 	[SerializeField, Range(1, 20)]
 	private float projectileForce = 10;
 	[SerializeField, Range(0, 20)]
-	private float projectileDamage = 10;
+	private int projectileDamage = 10;
 	[SerializeField, Range(0, 10)]
 	private float fireRate = 1;
 	[SerializeField, Range(1, 5)]

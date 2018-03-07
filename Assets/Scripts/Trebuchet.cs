@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Trebuchet : MonoBehaviour, IProjectileWeapon
+public class Trebuchet : MonoBehaviour
 {
+	[Header("Projectile Data")]
 	[SerializeField]
-	private ProjectileData data;
+	private ProjectileData projectileData;
+
+	[Header("Launch Variables")]
 	[SerializeField]
 	private Transform launchPosition;
 	[SerializeField]
@@ -12,6 +15,7 @@ public class Trebuchet : MonoBehaviour, IProjectileWeapon
 
 	private Animator animator;
 	private CharacterController charControl;
+	private float nextShotTime;
 
 	private void Awake()
 	{
@@ -31,7 +35,10 @@ public class Trebuchet : MonoBehaviour, IProjectileWeapon
 
 	public void TriggerAnimation()
 	{
-		Debug.Log("Projectile Fired!");
+		if (Time.time < this.nextShotTime)
+		{
+			return;
+		}
 
 		if (this.animator == null)
 		{
@@ -43,16 +50,16 @@ public class Trebuchet : MonoBehaviour, IProjectileWeapon
 		}
 	}
 
-	public void FireProjectile()
+	private void FireProjectile()
 	{
 		float launchRadians = (this.transform.rotation.eulerAngles.x + this.launchAngle) * Mathf.Deg2Rad;
 
 		Vector3 launchVector = new Vector3(
 			Mathf.Cos(launchRadians) * this.transform.forward.x,
 			Mathf.Sin(launchRadians),
-			Mathf.Cos(launchRadians) * this.transform.forward.z) * this.data.ProjectileForce + this.charControl.velocity;
+			Mathf.Cos(launchRadians) * this.transform.forward.z) * this.projectileData.ProjectileForce + this.charControl.velocity;
 
-#if UNITY_EDITOR
+#if false
 		Debug.Log("Angle: " + this.transform.rotation.eulerAngles.x + this.launchAngle
 			+ " 2D: " + (new Vector3(Mathf.Cos(launchRadians), Mathf.Sin(launchRadians), 0))
 			+ " forward: " + this.transform.forward
@@ -60,8 +67,14 @@ public class Trebuchet : MonoBehaviour, IProjectileWeapon
 #endif
 
 		// OPTION: Instantiate from object pool
-		Instantiate(this.data.Prefab, this.launchPosition.position, Quaternion.identity)
-			.GetComponent<Rigidbody>()
-			.AddForce(launchVector, ForceMode.VelocityChange);
+		GameObject newProjectile = Instantiate(this.projectileData.Prefab, this.launchPosition.position, Quaternion.identity);
+
+		newProjectile.tag = this.tag;
+		newProjectile.GetComponent<Rigidbody>().AddForce(launchVector, ForceMode.VelocityChange);
+		newProjectile.GetComponent<Projectile_Collider>().damage = this.projectileData.ProjectileDamage;
+
+		Destroy(newProjectile, this.projectileData.TimeoutDuration);
+
+		this.nextShotTime = Time.time + this.projectileData.FireRate;
 	}
 }

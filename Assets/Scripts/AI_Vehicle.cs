@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Player_Vehicle : MonoBehaviour, IVehicle
+public class AI_Vehicle : MonoBehaviour, IVehicle
 {
 	// IVehicle: Event is triggered when action condition is met
 	public event System.Action Action_Primary;
@@ -23,80 +23,59 @@ public class Player_Vehicle : MonoBehaviour, IVehicle
 
 	// Used to track the current health of the vehicle.
 	private int currentHealth;
-	// Local reference to CharacterController component.
-	private CharacterController controller;
-	// Local reference to Transform component.
-	private Transform tf;
-
-	private void Awake()
-	{
-		this.controller = this.GetComponent<CharacterController>();
-		this.tf = this.GetComponent<Transform>();
-	}
 
 	private void Start()
 	{
+		// Set current health to max health
 		this.currentHealth = this.Data.MaxHealth;
 
+		// Add default death action to death event
 		this.Action_Death += () =>
 			{
-				GameManager.KillPlayer();
-				this.StopAllCoroutines();
+				// Increment player score
+				GameManager.Instance.IncrementPlayerScore(this.vehicleData.VehicleWorth);
+				// Destroy this game object
 				Destroy(this.gameObject);
 			};
 	}
 
 	private void OnEnable()
 	{
-		this.StartCoroutine("MovementInput");
+		// Start state machine enumerator
+		this.StartCoroutine("Operate");
 	}
 
 	private void OnDisable()
 	{
-		this.StopCoroutine("MovementInput");
+		// Stop state machine enumerator
+		this.StopCoroutine("Operate");
 	}
 
-	private IEnumerator MovementInput()
+	/// <summary>
+	/// Manages basic AI state machine information.
+	/// </summary>
+	private IEnumerator Operate()
 	{
+		// Always run
 		while (true)
 		{
-			this.CalculateMovement();
-
-			if (Input.GetButtonDown("Primary Action"))
+			// if: Primary action event will call something
+			if (this.Action_Primary != null)
 			{
-				if (this.Action_Primary != null)
-				{
-					this.Action_Primary();
-				}
-			}
-			else if (Input.GetButtonDown("Secondary Action"))
-			{
-				if (this.Action_Secondary != null)
-				{
-					this.Action_Secondary();
-				}
+				// Run primary action event
+				this.Action_Primary();
 			}
 
+			// if: Secondary action event will call something
+			if (this.Action_Secondary != null)
+			{
+				// Run secondary action event
+				// TODO: Implement secondary action
+			}
+
+			// Proceed to next frame
 			yield return null;
 		}
-	}
-
-	private void CalculateMovement()
-	{
-		float horzAxis = Input.GetAxis("Horizontal");
-		float vertAxis = Input.GetAxis("Vertical");
-
-		if (vertAxis > 0)
-		{
-			vertAxis *= this.Data.ForwardSpeed;
-		}
-		else
-		{
-			vertAxis *= this.Data.ReverseSpeed;
-		}
-
-		this.tf.Rotate(0, horzAxis * this.Data.RotateSpeed * Time.deltaTime, 0);
-		this.controller.SimpleMove(vertAxis * this.tf.forward);
 	}
 
 	/// <summary>
