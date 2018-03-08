@@ -1,15 +1,14 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-[DisallowMultipleComponent]
-public class Player_Vehicle : MonoBehaviour, IVehicle
+[DisallowMultipleComponent, RequireComponent(typeof(CharacterController))]
+public class Vehicle_Mover : MonoBehaviour, IVehicle
 {
 	// IVehicle: Event is triggered when action condition is met
 	public event System.Action Action_Primary;
 	// IVehicle: Event is triggered when action condition is met
 	public event System.Action Action_Secondary;
 	// IVehicle: Event is triggered when action condition is met
-	public event System.Action Action_Death;
+	public event System.Action Event_Death;
 
 	// IVehicle: Property for local variable VehicleData vehicleData
 	public VehicleData Data { get { return this.vehicleData; } }
@@ -36,67 +35,61 @@ public class Player_Vehicle : MonoBehaviour, IVehicle
 
 	private void Start()
 	{
+		// Set current health equal to max health
 		this.currentHealth = this.Data.MaxHealth;
-
-		this.Action_Death += () =>
-			{
-				GameManager.KillPlayer();
-				this.StopAllCoroutines();
-				Destroy(this.gameObject);
-			};
 	}
 
-	private void OnEnable()
+	/// <summary>
+	/// IVehicle: Moves the vehicle based on the given axis value.
+	/// </summary>
+	/// <param name="movementAxisValue">Value of the movement axis.</param>
+	public void Move(float movementAxisValue)
 	{
-		this.StartCoroutine("MovementInput");
-	}
-
-	private void OnDisable()
-	{
-		this.StopCoroutine("MovementInput");
-	}
-
-	private IEnumerator MovementInput()
-	{
-		while (true)
+		if (movementAxisValue > 0)
 		{
-			this.CalculateMovement();
-
-			if (Input.GetButtonDown("Primary Action"))
-			{
-				if (this.Action_Primary != null)
-				{
-					this.Action_Primary();
-				}
-			}
-			else if (Input.GetButtonDown("Secondary Action"))
-			{
-				if (this.Action_Secondary != null)
-				{
-					this.Action_Secondary();
-				}
-			}
-
-			yield return null;
-		}
-	}
-
-	private void CalculateMovement()
-	{
-		float horzAxis = Input.GetAxis("Horizontal");
-		float vertAxis = Input.GetAxis("Vertical");
-
-		if (vertAxis > 0)
-		{
-			vertAxis *= this.Data.ForwardSpeed;
+			movementAxisValue *= this.Data.ForwardSpeed;
 		}
 		else
 		{
-			vertAxis *= this.Data.ReverseSpeed;
+			movementAxisValue *= this.Data.ReverseSpeed;
 		}
 
-		this.tf.Rotate(0, horzAxis * this.Data.RotateSpeed * Time.deltaTime, 0);
-		this.controller.SimpleMove(vertAxis * this.tf.forward);
+		this.controller.SimpleMove(movementAxisValue * this.tf.forward);
+	}
+
+	/// <summary>
+	/// IVehicle: Turns the vehicle based on the given axis value.
+	/// </summary>
+	/// <param name="rotationAxisValue">Value of rotation axis.</param>
+	public void Rotate(float rotationAxisValue)
+	{
+		this.tf.Rotate(0, rotationAxisValue * this.Data.RotateSpeed * Time.deltaTime, 0);
+	}
+
+	/// <summary>
+	/// IVehicle: Raises the primary action event.
+	/// </summary>
+	public void Raise_Action_Primary()
+	{
+		// if: The event will do something
+		if (this.Action_Primary != null)
+		{
+			// Raise the event
+			this.Action_Primary();
+		}
+	}
+
+	/// <summary>
+	/// IVehicle: Raises the secondary action event.
+	/// </summary>
+	public void Raise_Action_Secondary()
+	{
+		// if: The event will do something
+		if (this.Action_Secondary != null)
+		{
+			// Raise the event
+			this.Action_Secondary();
+		}
 	}
 
 	/// <summary>
@@ -115,8 +108,12 @@ public class Player_Vehicle : MonoBehaviour, IVehicle
 		// if: Current health is below threshhold
 		if (this.currentHealth <= 0)
 		{
-			// Call death event
-			this.Action_Death();
+			// if: Death event will do something
+			if (this.Event_Death != null)
+			{
+				// Call death event
+				this.Event_Death();
+			}
 		}
 	}
 }

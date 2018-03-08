@@ -140,10 +140,11 @@ GameObject:
   - component: {fileID: 23789300935816700}
   - component: {fileID: 95527230838969762}
   - component: {fileID: 143564931808415066}
+  - component: {fileID: 114538154399758460}
   - component: {fileID: 114639076145795268}
   - component: {fileID: 114286930796140624}
   m_Layer: 8
-  m_Name: Player_Ship_Basic
+  m_Name: Ship_Basic_Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -199,7 +200,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1876692144758630}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4796356379674462}
@@ -613,6 +614,18 @@ MonoBehaviour:
   projectileData: {fileID: 11400000, guid: 8bca573ff1de56f438bf8cbee243236e, type: 2}
   launchPosition: {fileID: 4160357853224122}
   launchAngle: 45
+--- !u!114 &114538154399758460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1876692144758630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a73de94092bbc40a84a71e71d165aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vehicleData: {fileID: 11400000, guid: edce6f8df99ef474d8c44f0892966b55, type: 2}
 --- !u!114 &114639076145795268
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -624,7 +637,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a3b6f9589bd4a84cb99b9511fbf4e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vehicleData: {fileID: 11400000, guid: edce6f8df99ef474d8c44f0892966b55, type: 2}
 --- !u!143 &143564931808415066
 CharacterController:
   m_ObjectHideFlags: 1

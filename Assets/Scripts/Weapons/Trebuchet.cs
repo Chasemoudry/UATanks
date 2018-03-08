@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[DisallowMultipleComponent]
+[RequireComponent(typeof(IVehicle))]
 public class Trebuchet : MonoBehaviour
 {
 	[Header("Projectile Data")]
