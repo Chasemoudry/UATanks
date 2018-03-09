@@ -1,0 +1,40 @@
+//--Requirements--//
+1) Navigate through the world maze (built from cubes and box colliders) by use of waypoints.
+ - Defensive
+ - Aggressive
+
+2) Use the "patrol, rotate on hearing, stop on sight, fire when in sights" code from class.
+ - Defensive
+ - Sentry (However, does not patrol)
+
+3) At some point, chase the player with appropriate obstacle avoidance.
+ - Aggressive
+
+4) At some point, flee from the player with appropriate obstacle avoidance.
+ - Coward
+
+//--Descriptions--//
+Cautious (1101)
+ - Can Patrol
+ - Searches
+ - Does not pursue
+ - Fires when focused
+
+Aggressive (1111)
+ - Can Patrol
+ - Searches
+ - Pursues
+ - Fires when focused
+
+Sentry (0101)
+ - Does not move
+ - Searches
+ - Does not pursue
+ - Fires when focused
+
+Coward (1100)
+ - Can Patrol
+ - Searches
+ - Does not pursue
+ - Does not retaliate
+ - Special: Flees

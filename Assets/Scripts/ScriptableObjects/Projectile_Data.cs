@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Data Objects/Projectile Data")]
-public class ProjectileData : ScriptableObject
+public class Projectile_Data : ScriptableObject
 {
 	public GameObject Prefab { get { return this.prefab; } }
 

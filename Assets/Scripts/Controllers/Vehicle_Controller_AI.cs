@@ -13,10 +13,14 @@ public class Vehicle_Controller_AI : MonoBehaviour
 
 	private void Start()
 	{
+		// Add sequence to Death event
 		this.vehicleHandler.Event_Death += () =>
 			{
+				// Stop taking input
 				this.StopAllCoroutines();
+				// Increment player score
 				GameManager.IncrementPlayerScore(this.vehicleHandler.Data.VehicleWorth);
+				// Despawn this vehicle
 				GameManager.DespawnAIVehicle(this.gameObject);
 			};
 	}

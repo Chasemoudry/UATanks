@@ -11,14 +11,14 @@ public class Vehicle_Mover : MonoBehaviour, IVehicle
 	public event System.Action Event_Death;
 
 	// IVehicle: Property for local variable VehicleData vehicleData
-	public VehicleData Data { get { return this.vehicleData; } }
+	public Vehicle_Data Data { get { return this.vehicleData; } }
 	// IVehicle: Property for local variable int currentHealth
 	public int Health { get { return this.currentHealth; } }
 
 	[Header("Movement Data")]
 	[SerializeField, Tooltip("Reference to VehicleData Asset which provides vehicle information.")]
 	// Local reference to this vehicle's information asset.
-	private VehicleData vehicleData;
+	private Vehicle_Data vehicleData;
 
 	// Used to track the current health of the vehicle.
 	private int currentHealth;

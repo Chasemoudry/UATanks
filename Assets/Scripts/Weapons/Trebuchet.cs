@@ -5,7 +5,7 @@ public class Trebuchet : MonoBehaviour
 {
 	[Header("Projectile Data")]
 	[SerializeField]
-	private ProjectileData projectileData;
+	private Projectile_Data projectileData;
 
 	[Header("Launch Variables")]
 	[SerializeField]

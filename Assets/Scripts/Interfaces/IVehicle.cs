@@ -4,7 +4,7 @@
 	event System.Action Action_Secondary;
 	event System.Action Event_Death;
 
-	VehicleData Data { get; }
+	Vehicle_Data Data { get; }
 	int Health { get; }
 
 	void Move(float movementAxis);
