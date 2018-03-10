@@ -2,13 +2,29 @@
 using UnityEngine;
 
 [DisallowMultipleComponent, RequireComponent(typeof(IVehicle))]
-public class Vehicle_Controller_AI : MonoBehaviour
+public class Vehicle_Controller_AI : MonoBehaviour, INavigator
 {
+	public Vector3 PointOfInterest
+	{
+		get { return this.lastPOI; }
+		set
+		{
+			this.lastPOI = value;
+			this.animator.SetTrigger("RaiseLevel");
+		}
+	}
+
+	[SerializeField]
+	private AI_Data data;
+
 	private IVehicle vehicleHandler;
+	private Animator animator;
+	private Vector3 lastPOI;
 
 	private void Awake()
 	{
 		this.vehicleHandler = this.GetComponent<IVehicle>();
+		this.animator = this.GetComponent<Animator>();
 	}
 
 	private void Start()
@@ -38,19 +54,38 @@ public class Vehicle_Controller_AI : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Manages basic AI state machine information.
+	/// Updates UAI state machine information.
 	/// </summary>
 	private IEnumerator Operate()
 	{
 		// Always run
 		while (true)
 		{
-			//TODO: State Machine
-			this.vehicleHandler.Raise_Action_Primary();
-			this.vehicleHandler.Raise_Action_Secondary();
+			// TODO: Track closest waypoint
+			// TODO: Set IsVisible
+			// TODO: Set IsFocused
 
 			// Proceed to next frame
 			yield return null;
 		}
+	}
+
+	public void MoveTowardsPOI()
+	{
+		// TODO: Navigate with NavMesh
+	}
+
+	public void LookAtPOI()
+	{
+		this.transform.LookAt(this.PointOfInterest);
+	}
+
+	public IEnumerator LowerLevel()
+	{
+		yield return new WaitForSeconds(4.0f);
+
+		this.GetComponent<Animator>().SetTrigger("LowerLevel");
+
+		yield break;
 	}
 }

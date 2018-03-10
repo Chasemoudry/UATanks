@@ -1,40 +1,55 @@
 //--Requirements--//
-1) Navigate through the world maze (built from cubes and box colliders) by use of waypoints.
- - Defensive
- - Aggressive
+1) Navigate by use of waypoints.
+2) Patrol, rotate on hearing, stop on sight, fire when in sights.
+3) Chase the player.
+4) Flee from the player.
 
-2) Use the "patrol, rotate on hearing, stop on sight, fire when in sights" code from class.
- - Defensive
- - Sentry (However, does not patrol)
+//--Legend--//
+X.1 = Patrol?
+ > True: Patrols waypoints
+ > False: Does not move
 
-3) At some point, chase the player with appropriate obstacle avoidance.
- - Aggressive
+X.2 = Pursue?
+ > True: Pursues on sight
+ > False: Does not pursue
 
-4) At some point, flee from the player with appropriate obstacle avoidance.
- - Coward
+X.3 = Attack?
+ > True: Attacks when in focus
+ > False:
+    - Pursue = True -> Attach
+    - Pursue = False -> Flee
 
 //--Descriptions--//
-Cautious (1101)
- - Can Patrol
- - Searches
- - Does not pursue
- - Fires when focused
+000 = Ward [NOT IMPLEMENTED]
+ > Does not move or interact
+ > Provides vision
+ > Analogy: Camera
 
-Aggressive (1111)
- - Can Patrol
- - Searches
- - Pursues
- - Fires when focused
+001 = Sentry
+ > Always Stationary
+ > Fires while in focus
+ > Analogy: Turret
 
-Sentry (0101)
- - Does not move
- - Searches
- - Does not pursue
- - Fires when focused
+010 = ??? [NOT IMPLEMENTED]
+ > Does not patrol
+ > Pursues for vision
 
-Coward (1100)
- - Can Patrol
- - Searches
- - Does not pursue
- - Does not retaliate
- - Special: Flees
+011 = Sentinel [NOT IMPLEMENTED]
+ > Singular waypoint
+ > Analogy: Security Guard
+
+100 = Scout
+ > Patrols waypoints
+ > Cannot attack or pursue, flees instead
+
+101 = Lookout
+ > Patrols waypoints
+ > Does not pursue/approach
+
+110 = Drone [NOT IMPLEMENTED]
+ > Patrols waypoints
+ > Pursues for vision
+
+111 = Fighter
+ > Patrols, pursues, and attacks
+ > Relentless
