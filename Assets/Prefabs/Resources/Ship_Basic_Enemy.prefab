@@ -592,7 +592,7 @@ Animator:
   m_GameObject: {fileID: 1223179260344716}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 757da0d9455e9814cace7df88c017681, type: 2}
+  m_Controller: {fileID: 9100000, guid: 731e0f78ffcc55742b1e7373f9b782f9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -637,6 +637,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad78be2b95024b54783a1e4d55bf377f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  behaviourType: 7
+  hearingDistance: 4
+  sightFOV_Total: 90
+  sightFOV_Focused: 60
+  patrolWaypoints: []
 --- !u!143 &143359162846115548
 CharacterController:
   m_ObjectHideFlags: 1

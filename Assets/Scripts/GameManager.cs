@@ -8,11 +8,13 @@ public class GameManager : MonoBehaviour
 
 	private event System.Action Event_GameOver;
 
+	public static GameObject PlayerOne { get { return Instance.playerList[0]; } }
+
 	[SerializeField]
 	private int playerScore;
 
-	private List<IVehicle> playerList = new List<IVehicle>();
-	private List<IVehicle> enemyList = new List<IVehicle>();
+	private List<GameObject> playerList = new List<GameObject>();
+	private List<GameObject> enemyList = new List<GameObject>();
 
 	private void Awake()
 	{
@@ -51,16 +53,15 @@ public class GameManager : MonoBehaviour
 	{
 		// OPTION: Instantiate from object pool
 		GameObject newObject = Instantiate(Resources.Load<GameObject>(prefabAssetPath), spawnPosition, spawnRotation);
-		IVehicle vehicleComponent = newObject.GetComponent<IVehicle>();
 
-		if (vehicleComponent == null)
+		if (newObject.GetComponent<IVehicle>() == null)
 		{
 			Debug.LogError("Requested player asset has no IVehicle component!");
 			Destroy(newObject);
 		}
 		else
 		{
-			Instance.playerList.Add(vehicleComponent);
+			Instance.playerList.Add(newObject);
 			Camera_FollowObject.ObjectToFollow = newObject.transform;
 		}
 	}
@@ -69,7 +70,7 @@ public class GameManager : MonoBehaviour
 	{
 		if (gameObject != null)
 		{
-			Instance.playerList.Remove(gameObject.GetComponent<IVehicle>());
+			Instance.playerList.Remove(gameObject);
 			// OPTION: Remove from object pool
 			Destroy(gameObject);
 		}
@@ -79,16 +80,15 @@ public class GameManager : MonoBehaviour
 	{
 		// OPTION: Instantiate from object pool
 		GameObject newObject = Instantiate(Resources.Load<GameObject>(prefabAssetPath), spawnPosition, spawnRotation);
-		IVehicle vehicleComponent = newObject.GetComponent<IVehicle>();
 
-		if (vehicleComponent == null)
+		if (newObject.GetComponent<IVehicle>() == null)
 		{
 			Debug.LogError("Requested AI asset has no IVehicle component!");
 			Destroy(newObject);
 		}
 		else
 		{
-			Instance.enemyList.Add(vehicleComponent);
+			Instance.enemyList.Add(newObject);
 		}
 	}
 
@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
 	{
 		if (gameObject != null)
 		{
-			Instance.enemyList.Remove(gameObject.GetComponent<IVehicle>());
+			Instance.enemyList.Remove(gameObject);
 			// OPTION: Remove from object pool
 			Destroy(gameObject);
 		}

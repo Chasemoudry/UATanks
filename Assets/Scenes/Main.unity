@@ -10281,11 +10281,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 95429016413169838, guid: a7eb39f8c29c804488e090c938dd3904,
+    - target: {fileID: 114395131085823558, guid: a7eb39f8c29c804488e090c938dd3904,
         type: 2}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 731e0f78ffcc55742b1e7373f9b782f9, type: 2}
+      propertyPath: sightLayerMask.m_Bits
+      value: 257
+      objectReference: {fileID: 0}
+    - target: {fileID: 114395131085823558, guid: a7eb39f8c29c804488e090c938dd3904,
+        type: 2}
+      propertyPath: behaviourType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a7eb39f8c29c804488e090c938dd3904, type: 2}
   m_IsPrefabParent: 0
