@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class AniBehaviour_Search : StateMachineBehaviour
+public class AB_Search : StateMachineBehaviour
 {
 	private Vehicle_Controller_AI controller;
 

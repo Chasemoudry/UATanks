@@ -10,10 +10,7 @@ public class Vehicle_Controller_AI : MonoBehaviour
 	{
 		get { return this.lastPOI; }
 	}
-
-	[Header("Navigation")]
-	[SerializeField]
-	private Enums.AI_BehaviourType behaviourType = Enums.AI_BehaviourType.Sentry;
+    
 	[SerializeField]
 	private Transform[] patrolWaypoints;
 
@@ -55,18 +52,6 @@ public class Vehicle_Controller_AI : MonoBehaviour
 				// Despawn this vehicle
 				GameManager.DespawnAIVehicle(this.gameObject);
 			};
-
-		byte source = (byte)this.behaviourType;
-		bool[] enumArray = new bool[8];
-
-		for (int i = 0; i < 8; i++)
-		{
-			enumArray[i] = ((source >> i) & 1) == 1;
-		}
-
-		this.animator.SetBool("CanPatrol", enumArray[0]);
-		this.animator.SetBool("CanPursue", enumArray[1]);
-		this.animator.SetBool("CanAttack", enumArray[2]);
 	}
 
 	private void OnEnable()
