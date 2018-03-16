@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CustomBehaviour : StateMachineBehaviour
 {
-    protected IVehicle controller;
+	protected IVehicle controller;
+	protected INavigator navigator;
 
-    public override void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
-    {
-        this.controller = animator.GetComponent<IVehicle>();
-    }
+	public override void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+	{
+		this.controller = animator.GetComponent<IVehicle>();
+		this.navigator = animator.GetComponent<INavigator>();
+	}
 }

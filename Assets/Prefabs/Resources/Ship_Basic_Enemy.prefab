@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 95429016413169838}
   - component: {fileID: 143359162846115548}
   - component: {fileID: 114310801584356458}
-  - component: {fileID: 114395131085823558}
+  - component: {fileID: 114413151096454356}
   - component: {fileID: 114008953237467902}
   m_Layer: 9
   m_Name: Ship_Basic_Enemy
@@ -83,7 +83,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1747684853492054
 GameObject:
   m_ObjectHideFlags: 1
@@ -592,7 +592,7 @@ Animator:
   m_GameObject: {fileID: 1223179260344716}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 731e0f78ffcc55742b1e7373f9b782f9, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -626,7 +626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vehicleData: {fileID: 11400000, guid: edce6f8df99ef474d8c44f0892966b55, type: 2}
---- !u!114 &114395131085823558
+--- !u!114 &114413151096454356
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -634,14 +634,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1223179260344716}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad78be2b95024b54783a1e4d55bf377f, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b89e66fee4d60e4bb76451c1739f8bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behaviourType: 7
-  hearingDistance: 4
-  sightFOV_Total: 90
-  sightFOV_Focused: 60
   patrolWaypoints: []
+  hearingDistance: 5
+  sightLayerMask:
+    serializedVersion: 2
+    m_Bits: 257
+  sightFOV_Total: 45
+  sightFOV_Focused: 30
+  target: {fileID: 0}
 --- !u!143 &143359162846115548
 CharacterController:
   m_ObjectHideFlags: 1

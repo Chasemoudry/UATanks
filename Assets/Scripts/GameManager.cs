@@ -10,10 +10,15 @@ public class GameManager : MonoBehaviour
 
 	public static GameObject PlayerOne { get { return Instance.playerList[0]; } }
 
+	[Header("DEBUG")]
+	// DELETE: Attribute
 	[SerializeField]
 	private int playerScore;
-
+	// DELETE: Attribute
+	[SerializeField]
 	private List<GameObject> playerList = new List<GameObject>();
+	// DELETE: Attribute
+	[SerializeField]
 	private List<GameObject> enemyList = new List<GameObject>();
 
 	private void Awake()
@@ -26,15 +31,20 @@ public class GameManager : MonoBehaviour
 		{
 			Destroy(this);
 		}
+
+		// TODO: Spawn sequence
+		SpawnPlayerVehicle("Ship_Basic_Player", Vector3.up, Quaternion.identity);
+
+		foreach (GameObject enemy in Instance.enemyList)
+		{
+			enemy.SetActive(true);
+		}
 	}
 
 	private void Start()
 	{
 		// TODO: Player Death
 		Instance.Event_GameOver += () => { Debug.LogWarning("Player Has Died!"); };
-
-		// TODO: Spawn sequence
-		SpawnPlayerVehicle("Ship_Basic_Player", Vector3.up, Quaternion.identity);
 	}
 
 	/// <summary>

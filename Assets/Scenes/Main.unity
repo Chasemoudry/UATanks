@@ -6644,6 +6644,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScore: 0
+  playerList: []
+  enemyList:
+  - {fileID: 2130327037}
 --- !u!4 &995556444
 Transform:
   m_ObjectHideFlags: 0
@@ -10242,7 +10245,7 @@ Mesh:
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshOptimized: 0
---- !u!1001 &2023695264
+--- !u!1001 &2056417884
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10281,18 +10284,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114395131085823558, guid: a7eb39f8c29c804488e090c938dd3904,
+    - target: {fileID: 95429016413169838, guid: a7eb39f8c29c804488e090c938dd3904,
         type: 2}
-      propertyPath: sightLayerMask.m_Bits
-      value: 257
-      objectReference: {fileID: 0}
-    - target: {fileID: 114395131085823558, guid: a7eb39f8c29c804488e090c938dd3904,
-        type: 2}
-      propertyPath: behaviourType
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114395131085823558, guid: a7eb39f8c29c804488e090c938dd3904, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: fd2fbac5324a7334b83d49e4701f1539, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a7eb39f8c29c804488e090c938dd3904, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &2058932897
@@ -10510,3 +10507,8 @@ Mesh:
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshOptimized: 0
+--- !u!1 &2130327037 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1223179260344716, guid: a7eb39f8c29c804488e090c938dd3904,
+    type: 2}
+  m_PrefabInternal: {fileID: 2056417884}

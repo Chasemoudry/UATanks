@@ -1,4 +1,6 @@
-﻿public interface IVehicle
+﻿using UnityEngine;
+
+public interface IVehicle
 {
 	event System.Action Action_Primary;
 	event System.Action Action_Secondary;
