@@ -24,12 +24,9 @@ public class Vehicle_AI_Sensor : MonoBehaviour, ISensor
 
 	private Animator animator;
 	private INavigator navigator;
+	private Collider[] colliders = new Collider[15];
 
 	private Vector3 testOffset = new Vector3(0, 0.5f, 0);
-
-#if DEBUG
-	private Color debugRayColor = Color.green;
-#endif
 
 	private void Awake()
 	{
@@ -63,11 +60,16 @@ public class Vehicle_AI_Sensor : MonoBehaviour, ISensor
 			{
 				this.navigator.CurrentTarget = null;
 
-				// TODO: Optimize GC
-				Collider[] colliders = Physics.OverlapSphere(this.transform.position, this.sightRadius, this.sightLayerMask);
+				// TODO: Automatic memory optimization
+				Physics.OverlapSphereNonAlloc(this.transform.position, this.sightRadius, this.colliders, this.sightLayerMask);
 
-				foreach (Collider potentialTarget in colliders)
+				foreach (Collider potentialTarget in this.colliders)
 				{
+					if (potentialTarget == null)
+					{
+						break;
+					}
+
 					if (potentialTarget.tag == "Player")
 					{
 						if (CanSeeTarget(potentialTarget.transform))
@@ -105,17 +107,22 @@ public class Vehicle_AI_Sensor : MonoBehaviour, ISensor
 #if DEBUG
 				if (transformAngle <= this.sightFOV_Focused)
 				{
-					Debug.DrawRay(ray.origin, ray.direction * this.sightRadius, Color.red);
+					Debug.DrawRay(ray.origin, ray.direction * this.sightRadius, Color.cyan);
 				}
 				else if (transformAngle <= this.sightFOV_Total)
 				{
-					Debug.DrawRay(ray.origin, ray.direction * this.sightRadius, Color.yellow);
+					Debug.DrawRay(ray.origin, ray.direction * this.sightRadius, Color.green);
 				}
 				else
 				{
-					Debug.DrawRay(ray.origin, ray.direction * this.sightRadius, Color.green);
+					Debug.DrawRay(ray.origin, ray.direction * this.sightRadius, Color.red);
 				}
 #endif
+
+				if (transformAngle <= this.sightFOV_Total)
+				{
+					this.navigator.UpdatePOI();
+				}
 
 				this.animator.SetBool("Target_InSight", transformAngle <= this.sightFOV_Total);
 				this.animator.SetBool("Target_InFocus", transformAngle <= this.sightFOV_Focused);
@@ -126,10 +133,6 @@ public class Vehicle_AI_Sensor : MonoBehaviour, ISensor
 
 		this.animator.SetBool("Target_InSight", false);
 		this.animator.SetBool("Target_InFocus", false);
-
-#if DEBUG
-		Debug.DrawRay(ray.origin, ray.direction * this.sightRadius, Color.green);
-#endif
 
 		return false;
 	}
