@@ -2,13 +2,13 @@
 using UnityEngine;
 
 [DisallowMultipleComponent, RequireComponent(typeof(IVehicle))]
-public class Vehicle_Controller_AI : MonoBehaviour
+public class Vehicle_Controller_AI_OLD : MonoBehaviour
 {
 	public Vector3 PointOfInterest
 	{
 		get { return this.lastPOI; }
 	}
-    
+
 	[SerializeField]
 	private Transform[] patrolWaypoints;
 
@@ -40,7 +40,7 @@ public class Vehicle_Controller_AI : MonoBehaviour
 	private void Start()
 	{
 		// Add sequence to Death event
-		this.vehicleHandler.Event_Death +=
+		this.vehicleHandler.OnDeath +=
 			() =>
 			{
 				// Stop taking input

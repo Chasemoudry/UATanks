@@ -1,13 +1,12 @@
-﻿using UnityEngine;
-
-public interface IVehicle
+﻿public interface IVehicle
 {
 	event System.Action Action_Primary;
 	event System.Action Action_Secondary;
-	event System.Action Event_Death;
+	event System.Action OnDeath;
+	event System.Action OnHealthChanged;
 
 	Vehicle_Data Data { get; }
-	int Health { get; }
+	int CurrentHealth { get; }
 
 	void Move(float movementAxis);
 	void Rotate(float rotationAxis);

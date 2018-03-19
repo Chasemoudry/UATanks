@@ -3,17 +3,27 @@
 [DisallowMultipleComponent, RequireComponent(typeof(CharacterController))]
 public class Vehicle_Mover : MonoBehaviour, IVehicle
 {
-	// IVehicle: Event is triggered when action condition is met
+	// IVehicle || event: triggered when action condition is met
 	public event System.Action Action_Primary;
-	// IVehicle: Event is triggered when action condition is met
+	// IVehicle || event:
 	public event System.Action Action_Secondary;
-	// IVehicle: Event is triggered when action condition is met
-	public event System.Action Event_Death;
+	// IVehicle || event: Triggered when vehicle health reaches zero
+	public event System.Action OnDeath;
+	// IVehicle || event: Triggered when health property is changed
+	public event System.Action OnHealthChanged;
 
 	// IVehicle: Property for local variable VehicleData vehicleData
 	public Vehicle_Data Data { get { return this.vehicleData; } }
+
 	// IVehicle: Property for local variable int currentHealth
-	public int Health { get { return this.currentHealth; } }
+	public int CurrentHealth
+	{
+		get
+		{
+			this.OnHealthChanged();
+			return this.currentHealth;
+		}
+	}
 
 	[Header("Movement Data")]
 	[SerializeField, Tooltip("Reference to VehicleData Asset which provides vehicle information.")]
@@ -109,10 +119,10 @@ public class Vehicle_Mover : MonoBehaviour, IVehicle
 		if (this.currentHealth <= 0)
 		{
 			// if: Death event will do something
-			if (this.Event_Death != null)
+			if (this.OnDeath != null)
 			{
 				// Call death event
-				this.Event_Death();
+				this.OnDeath();
 			}
 		}
 	}

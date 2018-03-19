@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [DisallowMultipleComponent, RequireComponent(typeof(IVehicle))]
-public class Vehicle_Controller_Player : MonoBehaviour
+public class Vehicle_Player_Controller : MonoBehaviour
 {
 	private IVehicle vehicleHandler;
 
@@ -13,7 +13,7 @@ public class Vehicle_Controller_Player : MonoBehaviour
 
 	private void Start()
 	{
-		this.vehicleHandler.Event_Death += () =>
+		this.vehicleHandler.OnDeath += () =>
 			{
 				this.StopAllCoroutines();
 				GameManager.DespawnPlayerVehicle(this.gameObject);

@@ -16,7 +16,7 @@ public class AI_Search : CustomBehaviour
 	{
 		if (this.canApproach)
 		{
-			// Navigate towards target's last known position
+			// TODO: Navigate towards target's last known position
 		}
 	}
 }

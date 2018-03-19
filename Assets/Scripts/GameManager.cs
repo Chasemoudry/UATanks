@@ -10,15 +10,20 @@ public class GameManager : MonoBehaviour
 
 	public static GameObject PlayerOne { get { return Instance.playerList[0]; } }
 
+#if DEBUG
 	[Header("DEBUG")]
-	// DELETE: Attribute
 	[SerializeField]
+#endif
 	private int playerScore;
-	// DELETE: Attribute
+
+#if DEBUG
 	[SerializeField]
+#endif
 	private List<GameObject> playerList = new List<GameObject>();
-	// DELETE: Attribute
+
+#if DEBUG
 	[SerializeField]
+#endif
 	private List<GameObject> enemyList = new List<GameObject>();
 
 	private void Awake()
@@ -35,10 +40,12 @@ public class GameManager : MonoBehaviour
 		// TODO: Spawn sequence
 		SpawnPlayerVehicle("Ship_Basic_Player", Vector3.up, Quaternion.identity);
 
+#if DEBUG
 		foreach (GameObject enemy in Instance.enemyList)
 		{
 			enemy.SetActive(true);
 		}
+#endif
 	}
 
 	private void Start()
@@ -59,10 +66,10 @@ public class GameManager : MonoBehaviour
 #endif
 	}
 
-	public static void SpawnPlayerVehicle(string prefabAssetPath, Vector3 spawnPosition, Quaternion spawnRotation)
+	public static void SpawnPlayerVehicle(string resourceFilePath, Vector3 spawnPosition, Quaternion spawnRotation)
 	{
 		// OPTION: Instantiate from object pool
-		GameObject newObject = Instantiate(Resources.Load<GameObject>(prefabAssetPath), spawnPosition, spawnRotation);
+		GameObject newObject = Instantiate(Resources.Load<GameObject>(resourceFilePath), spawnPosition, spawnRotation);
 
 		if (newObject.GetComponent<IVehicle>() == null)
 		{

@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 143359162846115548}
   - component: {fileID: 114310801584356458}
   - component: {fileID: 114413151096454356}
+  - component: {fileID: 114286940095428846}
   - component: {fileID: 114008953237467902}
   m_Layer: 9
   m_Name: Ship_Basic_Enemy
@@ -592,7 +593,7 @@ Animator:
   m_GameObject: {fileID: 1223179260344716}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fd2fbac5324a7334b83d49e4701f1539, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -614,6 +615,24 @@ MonoBehaviour:
   projectileData: {fileID: 11400000, guid: 8bca573ff1de56f438bf8cbee243236e, type: 2}
   launchPosition: {fileID: 4311830275181992}
   launchAngle: 45
+--- !u!114 &114286940095428846
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1223179260344716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42afd495efaebc449b5d7d368cc8fa3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sightLayerMask:
+    serializedVersion: 2
+    m_Bits: 257
+  sightRadius: 30
+  sightFOV_Total: 45
+  sightFOV_Focused: 15
+  hearingDistance: 5
 --- !u!114 &114310801584356458
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -638,13 +657,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolWaypoints: []
-  hearingDistance: 5
-  sightLayerMask:
-    serializedVersion: 2
-    m_Bits: 257
-  sightFOV_Total: 45
-  sightFOV_Focused: 30
-  target: {fileID: 0}
 --- !u!143 &143359162846115548
 CharacterController:
   m_ObjectHideFlags: 1
