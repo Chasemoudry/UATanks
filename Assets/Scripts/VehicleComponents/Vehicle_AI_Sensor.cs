@@ -43,24 +43,44 @@ public class Vehicle_AI_Sensor : MonoBehaviour, ISensor
 	{
 		if (this.sightFOV_Total > 0)
 		{
-			this.StartCoroutine("CastEyesight");
+			this.StartCoroutine("Sense");
 		}
 	}
 
 	private void OnDisable()
 	{
 		this.StopAllCoroutines();
+		this.animator.SetBool("Target_IsAudible", false);
+		this.animator.SetBool("Target_InSight", false);
+		this.animator.SetBool("Target_InFocus", false);
 	}
 
-	public IEnumerator CastEyesight()
+	public IEnumerator Sense()
 	{
 		while (true)
 		{
+			if (this.navigator.CurrentTarget != null)
+			{
+				if (Vector3.Distance(this.transform.position, this.navigator.CurrentTarget.position) <= this.hearingDistance)
+				{
+					this.animator.SetBool("Target_IsAudible", true);
+					this.navigator.UpdatePOI();
+				}
+				else
+				{
+					this.animator.SetBool("Target_IsAudible", false);
+				}
+			}
+			else
+			{
+				this.animator.SetBool("Target_IsAudible", false);
+			}
+
 			if (CanSeeTarget(this.navigator.CurrentTarget) == false)
 			{
 				this.navigator.CurrentTarget = null;
 
-				// TODO: Automatic memory optimization
+				// TODO: Automatic array sizing
 				Physics.OverlapSphereNonAlloc(this.transform.position, this.sightRadius, this.colliders, this.sightLayerMask);
 
 				foreach (Collider potentialTarget in this.colliders)

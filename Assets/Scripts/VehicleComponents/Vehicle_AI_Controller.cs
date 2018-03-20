@@ -24,7 +24,7 @@ public class Vehicle_AI_Controller : MonoBehaviour, INavigator
 	{
 		this.NavAgent = this.GetComponent<NavMeshAgent>();
 		this.NavAgent.speed = this.GetComponent<IVehicle>().Data.ForwardSpeed;
-		this.NavAgent.angularSpeed = this.GetComponent<IVehicle>().Data.RotateSpeed;
+		//this.NavAgent.angularSpeed = this.GetComponent<IVehicle>().Data.RotateSpeed;
 	}
 
 	public int GetClosestWaypoint()

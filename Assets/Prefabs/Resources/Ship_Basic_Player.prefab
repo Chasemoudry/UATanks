@@ -625,7 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32a73de94092bbc40a84a71e71d165aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vehicleData: {fileID: 11400000, guid: edce6f8df99ef474d8c44f0892966b55, type: 2}
+  vehicleData: {fileID: 11400000, guid: ae56a739f48793344900c74859284307, type: 2}
 --- !u!114 &114639076145795268
 MonoBehaviour:
   m_ObjectHideFlags: 1

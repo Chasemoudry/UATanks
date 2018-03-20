@@ -8,6 +8,6 @@ public interface ISensor
 	int SightFOV_Focused { get; }
 	float HearingDistance { get; }
 
-	IEnumerator CastEyesight();
+	IEnumerator Sense();
 	bool CanSeeTarget(Transform target);
 }

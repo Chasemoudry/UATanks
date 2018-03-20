@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class AI_Search : CustomBehaviour
+public class AI_FollowTarget : CustomBehaviour
 {
 	[SerializeField]
 	private float stoppingDistance = 5;
@@ -14,7 +16,9 @@ public class AI_Search : CustomBehaviour
 
 	public override void OnStateUpdate(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
 	{
-		// Navigate towards target's last known position
-		this.navigator.NavAgent.SetDestination(this.navigator.LastPOI);
+		if (this.navigator.CurrentTarget != null)
+		{
+			this.navigator.NavAgent.SetDestination(this.navigator.CurrentTarget.position);
+		}
 	}
 }
