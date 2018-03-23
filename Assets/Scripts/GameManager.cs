@@ -36,16 +36,6 @@ public class GameManager : MonoBehaviour
 		{
 			Destroy(this);
 		}
-
-		// TODO: Spawn sequence
-		SpawnPlayerVehicle("Ship_Basic_Player", Vector3.up, Quaternion.identity);
-
-#if DEBUG
-		foreach (GameObject enemy in Instance.enemyList)
-		{
-			enemy.SetActive(true);
-		}
-#endif
 	}
 
 	private void Start()
@@ -105,6 +95,24 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
+			Instance.enemyList.Add(newObject);
+		}
+	}
+
+	public static void SpawnAIVehicle(string prefabAssetPath, Vector3 spawnPosition, Quaternion spawnRotation,
+		Transform[] waypoints)
+	{
+		// OPTION: Instantiate from object pool
+		GameObject newObject = Instantiate(Resources.Load<GameObject>(prefabAssetPath), spawnPosition, spawnRotation);
+
+		if (newObject.GetComponent<IVehicle>() == null)
+		{
+			Debug.LogError("Requested AI asset has no IVehicle component!");
+			Destroy(newObject);
+		}
+		else
+		{
+			newObject.GetComponent<INavigator>().SetWaypoints(waypoints);
 			Instance.enemyList.Add(newObject);
 		}
 	}

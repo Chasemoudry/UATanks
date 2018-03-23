@@ -16,5 +16,7 @@ public class AI_Search : CustomBehaviour
 	{
 		// Navigate towards target's last known position
 		this.navigator.NavAgent.SetDestination(this.navigator.LastPOI);
+
+		// TODO: Add timeout -> exit
 	}
 }

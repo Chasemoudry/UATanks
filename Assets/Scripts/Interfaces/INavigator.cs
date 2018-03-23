@@ -8,6 +8,7 @@ public interface INavigator
 	Transform CurrentTarget { get; set; }
 	Vector3 LastPOI { get; }
 
+	void SetWaypoints(Transform[] waypoints);
 	int GetClosestWaypoint();
 	int GetNextWaypoint(int currentIndex);
 	void UpdatePOI();

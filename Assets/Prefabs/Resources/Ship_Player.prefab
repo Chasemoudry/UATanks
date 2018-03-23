@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 114639076145795268}
   - component: {fileID: 114286930796140624}
   m_Layer: 8
-  m_Name: Ship_Basic_Player
+  m_Name: Ship_Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -650,7 +650,7 @@ CharacterController:
   m_Height: 0
   m_Radius: 1.16
   m_SlopeLimit: 30
-  m_StepOffset: 0.31
+  m_StepOffset: 0.51
   m_SkinWidth: 0.116
   m_MinMoveDistance: 0.01
   m_Center: {x: 0, y: 1.2, z: 0}

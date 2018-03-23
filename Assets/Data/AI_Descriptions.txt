@@ -38,7 +38,7 @@ X.3 = Attack?
  > Singular waypoint
  > Analogy: Security Guard
 
-100 = Scout
+100 = Scout [NOT IMPLEMENTED]
  > Patrols waypoints
  > Cannot attack or pursue, flees instead
 
