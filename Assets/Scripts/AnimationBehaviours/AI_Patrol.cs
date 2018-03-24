@@ -3,8 +3,7 @@
 namespace CustomBehaviours
 {
 	/// <summary>
-	/// Custom StateMachineBehaviour which handles waypoint navigation for the animator
-	/// object's INavigator component.
+	/// Custom StateMachineBehaviour which handles waypoint navigation for the animator object's INavigator component.
 	/// </summary>
 	public class AI_Patrol : StateMachineBehaviour
 	{
