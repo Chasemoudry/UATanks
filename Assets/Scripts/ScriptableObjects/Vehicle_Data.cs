@@ -18,7 +18,7 @@ public class Vehicle_Data : ScriptableObject
 	private float forwardSpeed = 6;
 	[SerializeField, Range(1, 10)]
 	private float reverseSpeed = 3;
-	[SerializeField, Range(2, 90)]
+	[SerializeField, Range(2, 180)]
 	private int rotateSpeed = 60;
 
 	[Header("Durability Settings")]

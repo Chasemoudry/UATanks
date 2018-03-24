@@ -1,4 +1,7 @@
-﻿public interface IVehicle
+﻿/// <summary>
+/// Interface used to track vehicle data and events.
+/// </summary>
+public interface IVehicle
 {
 	event System.Action Action_Primary;
 	event System.Action Action_Secondary;

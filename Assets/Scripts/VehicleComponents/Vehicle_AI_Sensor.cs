@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+[DisallowMultipleComponent, RequireComponent(typeof(Animator))]
 public class Vehicle_AI_Sensor : MonoBehaviour, ISensor
 {
-	public LayerMask SightLayerMask { get { return this.sightLayerMask; } }
-	public int SightFOV_Total { get { return this.sightFOV_Total; } }
-	public int SightFOV_Focused { get { return this.sightFOV_Focused; } }
-	public float HearingDistance { get { return this.hearingDistance; } }
+	public Transform CurrentTarget { get; private set; }
+	public Vector3 LastPOI { get; private set; }
 
 	[Header("Sight")]
 	[SerializeField]
@@ -23,7 +22,6 @@ public class Vehicle_AI_Sensor : MonoBehaviour, ISensor
 	private float hearingDistance = 5;
 
 	private Animator animator;
-	private INavigator navigator;
 	private Collider[] colliders = new Collider[15];
 
 	private Vector3 testOffset = new Vector3(0, 0.5f, 0);
@@ -36,7 +34,6 @@ public class Vehicle_AI_Sensor : MonoBehaviour, ISensor
 		}
 
 		this.animator = this.GetComponent<Animator>();
-		this.navigator = this.GetComponent<INavigator>();
 	}
 
 	private void OnEnable()
@@ -59,12 +56,12 @@ public class Vehicle_AI_Sensor : MonoBehaviour, ISensor
 	{
 		while (true)
 		{
-			if (this.navigator.CurrentTarget != null)
+			if (this.CurrentTarget != null)
 			{
-				if (Vector3.Distance(this.transform.position, this.navigator.CurrentTarget.position) <= this.hearingDistance)
+				if (Vector3.Distance(this.transform.position, this.CurrentTarget.position) <= this.hearingDistance)
 				{
 					this.animator.SetBool("Target_IsAudible", true);
-					this.navigator.UpdatePOI();
+					this.UpdatePOI();
 				}
 				else
 				{
@@ -76,9 +73,9 @@ public class Vehicle_AI_Sensor : MonoBehaviour, ISensor
 				this.animator.SetBool("Target_IsAudible", false);
 			}
 
-			if (CanSeeTarget(this.navigator.CurrentTarget) == false)
+			if (CanSeeTarget(this.CurrentTarget) == false)
 			{
-				this.navigator.CurrentTarget = null;
+				this.CurrentTarget = null;
 
 				// TODO: Automatic array sizing
 				Physics.OverlapSphereNonAlloc(this.transform.position, this.sightRadius, this.colliders, this.sightLayerMask);
@@ -94,7 +91,7 @@ public class Vehicle_AI_Sensor : MonoBehaviour, ISensor
 					{
 						if (CanSeeTarget(potentialTarget.transform))
 						{
-							this.navigator.CurrentTarget = potentialTarget.transform;
+							this.CurrentTarget = potentialTarget.transform;
 							break;
 						}
 					}
@@ -141,7 +138,7 @@ public class Vehicle_AI_Sensor : MonoBehaviour, ISensor
 
 				if (transformAngle <= this.sightFOV_Total)
 				{
-					this.navigator.UpdatePOI();
+					this.UpdatePOI();
 				}
 
 				this.animator.SetBool("Target_InSight", transformAngle <= this.sightFOV_Total);
@@ -155,5 +152,13 @@ public class Vehicle_AI_Sensor : MonoBehaviour, ISensor
 		this.animator.SetBool("Target_InFocus", false);
 
 		return false;
+	}
+
+	public void UpdatePOI()
+	{
+		if (this.CurrentTarget != null)
+		{
+			this.LastPOI = this.CurrentTarget.position;
+		}
 	}
 }

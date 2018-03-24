@@ -2,14 +2,13 @@
 using UnityEngine.AI;
 
 [DisallowMultipleComponent, RequireComponent(typeof(Animator), typeof(NavMeshAgent))]
-public class Vehicle_AI_Controller : MonoBehaviour, INavigator
+public class Vehicle_AI_Navigator : MonoBehaviour, INavigator
 {
-	public Transform CurrentTarget { get; set; }
-	public Vector3 LastPOI { get; private set; }
-
-	// TODO: Move INavigator to separate component
+	/// <summary><see cref="INavigator.NavAgent"/></summary>
 	public NavMeshAgent NavAgent { get; private set; }
-	public Transform[] PatrolWaypoints { get; private set; }
+
+	/// <summary><see cref="INavigator.WaypointList"/></summary>
+	public Transform[] WaypointList { get; private set; }
 
 	private void Start()
 	{
@@ -24,19 +23,25 @@ public class Vehicle_AI_Controller : MonoBehaviour, INavigator
 		}
 	}
 
+	/// <summary>
+	/// <see cref="INavigator.SetWaypoints(Transform[])"/>
+	/// </summary>
 	public void SetWaypoints(Transform[] waypoints)
 	{
-		this.PatrolWaypoints = waypoints;
+		this.WaypointList = waypoints;
 	}
 
+	/// <summary>
+	/// <see cref="INavigator.GetClosestWaypoint"/>
+	/// </summary>
 	public int GetClosestWaypoint()
 	{
-		float smallestDistance = Vector3.Distance(this.transform.position, this.PatrolWaypoints[0].position);
+		float smallestDistance = Vector3.Distance(this.transform.position, this.WaypointList[0].position);
 		int indexOfClosest = 0;
 
-		for (int i = 0; i < this.PatrolWaypoints.Length; i++)
+		for (int i = 0; i < this.WaypointList.Length; i++)
 		{
-			if (Vector3.Distance(this.transform.position, this.PatrolWaypoints[i].position) < smallestDistance)
+			if (Vector3.Distance(this.transform.position, this.WaypointList[i].position) < smallestDistance)
 			{
 				indexOfClosest = i;
 			}
@@ -45,27 +50,22 @@ public class Vehicle_AI_Controller : MonoBehaviour, INavigator
 		return indexOfClosest;
 	}
 
+	/// <summary>
+	/// <see cref="INavigator.GetNextWaypoint(int)"/>
+	/// </summary>
 	public int GetNextWaypoint(int currentIndex)
 	{
-		if (this.PatrolWaypoints.Length == 0)
+		if (this.WaypointList.Length == 0)
 		{
 			Debug.LogWarning("AI Controller has no waypoints, defaulting return value to 0.");
 			return 0;
 		}
 
-		if (currentIndex == this.PatrolWaypoints.Length - 1)
+		if (currentIndex == this.WaypointList.Length - 1)
 		{
 			return 0;
 		}
 
 		return currentIndex + 1;
-	}
-
-	public void UpdatePOI()
-	{
-		if (this.CurrentTarget != null)
-		{
-			this.LastPOI = this.CurrentTarget.position;
-		}
 	}
 }

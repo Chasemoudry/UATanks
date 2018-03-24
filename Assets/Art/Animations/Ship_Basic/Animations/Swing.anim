@@ -642,9 +642,10 @@ AnimationClip:
   m_GenerateMotionCurves: 0
   m_Events:
   - time: 0.5
-    functionName: FireProjectile
+    functionName: Attack
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 11500000, guid: ca0694344f73ec7448ad65c0593882a9,
+      type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

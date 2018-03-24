@@ -105,16 +105,12 @@ public class GameManager : MonoBehaviour
 		// OPTION: Instantiate from object pool
 		GameObject newObject = Instantiate(Resources.Load<GameObject>(prefabAssetPath), spawnPosition, spawnRotation);
 
-		if (newObject.GetComponent<IVehicle>() == null)
-		{
-			Debug.LogError("Requested AI asset has no IVehicle component!");
-			Destroy(newObject);
-		}
-		else
+		if (waypoints.Length > 0)
 		{
 			newObject.GetComponent<INavigator>().SetWaypoints(waypoints);
-			Instance.enemyList.Add(newObject);
 		}
+
+		Instance.enemyList.Add(newObject);
 	}
 
 	public static void DespawnAIVehicle(GameObject gameObject)

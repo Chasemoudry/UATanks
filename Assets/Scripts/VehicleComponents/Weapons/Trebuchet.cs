@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(IVehicle))]
-public class Trebuchet : MonoBehaviour
+public class Trebuchet : MonoBehaviour, IWeapon
 {
+	private const float attackAnimationLength = 1.5f;
+
 	[Header("Projectile Data")]
 	[SerializeField]
 	private Projectile_Data projectileData;
@@ -14,13 +16,18 @@ public class Trebuchet : MonoBehaviour
 	private float launchAngle = 45f;
 
 	private Animator animator;
-	private CharacterController charControl;
+	private CharacterController controller;
 	private float nextShotTime;
 
 	private void Awake()
 	{
 		this.animator = this.GetComponent<Animator>();
-		this.charControl = this.GetComponent<CharacterController>();
+		this.controller = this.GetComponent<CharacterController>();
+
+		if (this.animator != null)
+		{
+			this.animator.SetFloat("AttackSpeed", attackAnimationLength / this.projectileData.FireRate);
+		}
 	}
 
 	private void OnEnable()
@@ -42,22 +49,28 @@ public class Trebuchet : MonoBehaviour
 
 		if (this.animator == null)
 		{
-			this.FireProjectile();
+			this.Attack();
 		}
 		else
 		{
-			this.animator.SetTrigger("Fire");
+			this.animator.SetBool("Attack", true);
 		}
 	}
 
-	private void FireProjectile()
+	public void Attack()
 	{
 		float launchRadians = (this.transform.rotation.eulerAngles.x + this.launchAngle) * Mathf.Deg2Rad;
+		Vector3 currentVelocity = Vector3.zero;
+
+		if (this.controller != null)
+		{
+			currentVelocity = this.controller.velocity;
+		}
 
 		Vector3 launchVector = new Vector3(
 			Mathf.Cos(launchRadians) * this.transform.forward.x,
 			Mathf.Sin(launchRadians),
-			Mathf.Cos(launchRadians) * this.transform.forward.z) * this.projectileData.ProjectileForce + this.charControl.velocity;
+			Mathf.Cos(launchRadians) * this.transform.forward.z) * this.projectileData.ProjectileForce + currentVelocity;
 
 #if false
 		Debug.Log("Angle: " + this.transform.rotation.eulerAngles.x + this.launchAngle

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Rock_TEST
   m_EditorClassIdentifier: 
   prefab: {fileID: 1337604528458904, guid: 34c94a0a33c3ee042a21e7fba34376dd, type: 2}
-  projectileForce: 10
+  projectileForce: 20
   projectileDamage: 10
-  fireRate: 2
+  fireRate: 1
   timeoutDuration: 3

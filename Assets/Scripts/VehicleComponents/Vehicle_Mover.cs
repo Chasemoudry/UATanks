@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[DisallowMultipleComponent, RequireComponent(typeof(CharacterController))]
+[DisallowMultipleComponent, RequireComponent(typeof(Collider))]
 public class Vehicle_Mover : MonoBehaviour, IVehicle
 {
 	// IVehicle || event: triggered when action condition is met
