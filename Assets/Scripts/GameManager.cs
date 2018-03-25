@@ -1,14 +1,18 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [DisallowMultipleComponent]
 public class GameManager : MonoBehaviour
 {
+	public static GameObject PlayerOne { get { return Instance.playerList[0]; } }
+
+	public MapGeneration.Map.MapVector2 mapSize;
+
 	private static GameManager Instance { get; set; }
 
 	private event System.Action Event_GameOver;
-
-	public static GameObject PlayerOne { get { return Instance.playerList[0]; } }
+	private MapGeneration.Map mapInstance;
 
 #if DEBUG
 	[Header("DEBUG")]
@@ -42,6 +46,41 @@ public class GameManager : MonoBehaviour
 	{
 		// TODO: Player Death
 		Instance.Event_GameOver += () => { Debug.LogWarning("Player Has Died!"); };
+
+		BeginGame();
+	}
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			RestartGame();
+		}
+	}
+
+	private static void BeginGame()
+	{
+		Instance.mapInstance = new GameObject().AddComponent<MapGeneration.Map>();
+		Instance.mapInstance.name = "Map Instance";
+		Instance.mapInstance.MapSize = Instance.mapSize;
+	}
+
+	private static void EndGame()
+	{
+		Destroy(Instance.mapInstance.gameObject);
+	}
+
+	private static void RestartGame()
+	{
+		Destroy(Instance.mapInstance.gameObject);
+		Instance.mapInstance = new GameObject().AddComponent<MapGeneration.Map>();
+		Instance.mapInstance.name = "Map Instance";
+		Instance.mapInstance.MapSize = Instance.mapSize;
+	}
+
+	public static void RebuildNavMesh()
+	{
+		Instance.GetComponent<NavMeshSurface>().BuildNavMesh();
 	}
 
 	/// <summary>
@@ -56,10 +95,10 @@ public class GameManager : MonoBehaviour
 #endif
 	}
 
-	public static void SpawnPlayerVehicle(string resourceFilePath, Vector3 spawnPosition, Quaternion spawnRotation)
+	public static void SpawnPlayerVehicle(Vector3 spawnPosition, Quaternion spawnRotation)
 	{
 		// OPTION: Instantiate from object pool
-		GameObject newObject = Instantiate(Resources.Load<GameObject>(resourceFilePath), spawnPosition, spawnRotation);
+		GameObject newObject = Instantiate(Resources.Load<GameObject>("Ship_Player"), spawnPosition, spawnRotation);
 
 		if (newObject.GetComponent<IVehicle>() == null)
 		{

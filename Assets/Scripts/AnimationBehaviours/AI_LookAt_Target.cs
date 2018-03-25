@@ -20,6 +20,7 @@ namespace CustomBehaviours
 			// if: animator object has an INavigator, stop navigation
 			if (this.Navigator != null)
 			{
+				this.Navigator.NavAgent.speed = 0;
 				this.Navigator.NavAgent.isStopped = true;
 			}
 		}

@@ -10,7 +10,7 @@ public class Vehicle_AI_Navigator : MonoBehaviour, INavigator
 	/// <summary><see cref="INavigator.WaypointList"/></summary>
 	public Transform[] WaypointList { get; private set; }
 
-	private void Start()
+	private void Awake()
 	{
 		this.NavAgent = this.GetComponent<NavMeshAgent>();
 

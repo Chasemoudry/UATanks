@@ -12,16 +12,19 @@ namespace MapGeneration
 			public Transform[] waypoints;
 		}
 
+		public Map.MapVector2 tilePosition;
 		public Transform Player_Spawn;
+
 		[SerializeField]
 		private AISpawnInfo[] AI_Spawns;
-		public Transform[] Pickup_Spawns;
+		[SerializeField]
+		private Transform[] Pickup_Spawns;
 
 		private void Start()
 		{
+			return;
+
 			// TODO: Spawn sequence
-			GameManager.SpawnPlayerVehicle("Ship_Player", this.Player_Spawn.position,
-				this.Player_Spawn.rotation);
 
 			foreach (AISpawnInfo spawnInfo in this.AI_Spawns)
 			{
