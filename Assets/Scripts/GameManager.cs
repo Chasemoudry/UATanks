@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 	public static GameObject PlayerOne { get { return Instance.playerList[0]; } }
 
 	public MapGeneration.Map.MapVector2 mapSize;
+	public GameObject camSystem_PlayerOne;
+	public GameObject camSystem_PlayerTwo;
 
 	private static GameManager Instance { get; set; }
 
@@ -68,11 +70,22 @@ public class GameManager : MonoBehaviour
 	private static void EndGame()
 	{
 		Destroy(Instance.mapInstance.gameObject);
+		Instance.playerList.Clear();
+		Instance.enemyList.Clear();
 	}
 
 	private static void RestartGame()
 	{
 		Destroy(Instance.mapInstance.gameObject);
+
+		for (int i = Instance.playerList.Count - 1; i >= 0; i--)
+		{
+			Destroy(Instance.playerList[i]);
+		}
+
+		Instance.enemyList.Clear();
+		Instance.playerList.Clear();
+
 		Instance.mapInstance = new GameObject().AddComponent<MapGeneration.Map>();
 		Instance.mapInstance.name = "Map Instance";
 		Instance.mapInstance.MapSize = Instance.mapSize;
@@ -98,7 +111,8 @@ public class GameManager : MonoBehaviour
 	public static void SpawnPlayerVehicle(Vector3 spawnPosition, Quaternion spawnRotation)
 	{
 		// OPTION: Instantiate from object pool
-		GameObject newObject = Instantiate(Resources.Load<GameObject>("Ship_Player"), spawnPosition, spawnRotation);
+		GameObject newObject = Instantiate(Resources.Load<GameObject>("Ship_Player"),
+			spawnPosition, spawnRotation);
 
 		if (newObject.GetComponent<IVehicle>() == null)
 		{
@@ -122,27 +136,12 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	public static void SpawnAIVehicle(string prefabAssetPath, Vector3 spawnPosition, Quaternion spawnRotation)
+	public static GameObject SpawnAIVehicle(string prefabAssetPath, Vector3 spawnPosition,
+		Quaternion spawnRotation, Transform[] waypoints)
 	{
 		// OPTION: Instantiate from object pool
-		GameObject newObject = Instantiate(Resources.Load<GameObject>(prefabAssetPath), spawnPosition, spawnRotation);
-
-		if (newObject.GetComponent<IVehicle>() == null)
-		{
-			Debug.LogError("Requested AI asset has no IVehicle component!");
-			Destroy(newObject);
-		}
-		else
-		{
-			Instance.enemyList.Add(newObject);
-		}
-	}
-
-	public static void SpawnAIVehicle(string prefabAssetPath, Vector3 spawnPosition, Quaternion spawnRotation,
-		Transform[] waypoints)
-	{
-		// OPTION: Instantiate from object pool
-		GameObject newObject = Instantiate(Resources.Load<GameObject>(prefabAssetPath), spawnPosition, spawnRotation);
+		GameObject newObject = Instantiate(Resources.Load<GameObject>(prefabAssetPath),
+			spawnPosition, spawnRotation);
 
 		if (waypoints.Length > 0)
 		{
@@ -150,6 +149,8 @@ public class GameManager : MonoBehaviour
 		}
 
 		Instance.enemyList.Add(newObject);
+
+		return newObject;
 	}
 
 	public static void DespawnAIVehicle(GameObject gameObject)

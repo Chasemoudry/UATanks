@@ -635,7 +635,7 @@ Animator:
   m_GameObject: {fileID: 1223179260344716}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5f64febb079df3e4c8ef397fc9ada128, type: 2}
+  m_Controller: {fileID: 9100000, guid: cf627485f402f7249ad62170ae6fd488, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -674,7 +674,7 @@ MonoBehaviour:
   sightRadius: 15
   sightFOV_Total: 45
   sightFOV_Focused: 15
-  hearingDistance: 10
+  hearingDistance: 20
 --- !u!114 &114310801584356458
 MonoBehaviour:
   m_ObjectHideFlags: 1

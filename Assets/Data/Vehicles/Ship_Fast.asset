@@ -14,5 +14,5 @@ MonoBehaviour:
   forwardSpeed: 8
   reverseSpeed: 6
   rotateSpeed: 120
-  maxHealth: 60
+  maxHealth: 100
   vehicleWorth: 40

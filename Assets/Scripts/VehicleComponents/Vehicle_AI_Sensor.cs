@@ -47,9 +47,12 @@ public class Vehicle_AI_Sensor : MonoBehaviour, ISensor
 	private void OnDisable()
 	{
 		this.StopAllCoroutines();
+
+#if UNITY_EDITOR == false
 		this.animator.SetBool("Target_IsAudible", false);
 		this.animator.SetBool("Target_InSight", false);
 		this.animator.SetBool("Target_InFocus", false);
+#endif
 	}
 
 	public IEnumerator Sense()

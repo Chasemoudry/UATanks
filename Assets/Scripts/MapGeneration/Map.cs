@@ -40,7 +40,7 @@ namespace MapGeneration
 			var activeTiles = new List<Tile>
 			{
 				// Spawn first tile
-				SpawnTile(this.GetRandomPosition())
+				CreateTile(this.GetRandomPosition())
 			};
 
 			while (activeTiles.Count > 0)
@@ -51,39 +51,98 @@ namespace MapGeneration
 
 			GameManager.RebuildNavMesh();
 
+
+			foreach (Tile tile in this.TileMap)
+			{
+				yield return null;
+				tile.SpawnAgents();
+			}
+
+			yield return null;
 			this.SpawnPlayer();
 		}
 
 		private void SpawnRemainingTiles(List<Tile> activeTiles)
 		{
 			int currentIndex = activeTiles.Count - 1;
-			MapVector2 newTilePosition = activeTiles[currentIndex].tilePosition + MapDirections.GetRandomDirection().ToMapVector2();
+			Tile currentTile = activeTiles[currentIndex];
 
-			if (this.IsValidCoordinate(newTilePosition) && GetTile(newTilePosition) == null)
+			if (currentTile.IsInitialized)
 			{
-				activeTiles.Add(SpawnTile(newTilePosition));
+				activeTiles.RemoveAt(currentIndex);
+				return;
+			}
+
+			Enums.CardinalDirection direction = currentTile.GetRandomUnintializedDirection();
+			MapVector2 newTilePosition = currentTile.tilePosition + direction.ToMapVector2();
+
+			if (this.IsValidCoordinate(newTilePosition))
+			{
+				Tile neighbor = GetTile(newTilePosition);
+
+				if (neighbor == null)
+				{
+					neighbor = CreateTile(newTilePosition);
+					BuildConnector(currentTile, neighbor, direction);
+					activeTiles.Add(neighbor);
+				}
+				else
+				{
+					BuildWall(currentTile, neighbor, direction);
+				}
 			}
 			else
 			{
-				activeTiles.RemoveAt(currentIndex);
+				BuildWall(currentTile, null, direction);
 			}
 		}
 
-		private Tile SpawnTile(MapVector2 cellPosition)
+		private Tile CreateTile(MapVector2 cellPosition)
 		{
-			//Debug.Log("Populating " + cellPosition.x + " , " + cellPosition.z + "!");
+			Tile newTile;
 
-			Tile newTile = Instantiate(Resources.Load<GameObject>("Blocks/Arena")).GetComponent<Tile>();
+			switch (Random.Range(0, 2))
+			{
+				case 0:
+					newTile = Instantiate(Resources.Load<GameObject>("Blocks/Arena")).GetComponent<Tile>();
+					break;
+				case 1:
+					newTile = Instantiate(Resources.Load<GameObject>("Blocks/Pipes")).GetComponent<Tile>();
+					break;
+				default:
+					newTile = Instantiate(Resources.Load<GameObject>("Blocks/Arena")).GetComponent<Tile>();
+					break;
+			}
 
 			this.TileMap[cellPosition.x, cellPosition.z] = newTile;
 
 			newTile.tilePosition = new MapVector2(cellPosition.x, cellPosition.z);
 			newTile.name += " Tile " + cellPosition.x + ", " + cellPosition.z;
 			newTile.transform.parent = this.transform;
-			newTile.transform.localPosition =
-				new Vector3(cellPosition.x * 75, 0f, cellPosition.z * 75);
+			newTile.transform.localPosition = new Vector3(cellPosition.x * 75, 0f, cellPosition.z * 75);
 
 			return newTile;
+		}
+
+		private void BuildWall(Tile tile1, Tile tile2, Enums.CardinalDirection direction)
+		{
+			TileEdge wall = Instantiate(Resources.Load<GameObject>("Blocks/Wall")).GetComponent<TileEdge>();
+			wall.InitializeEdge(tile1, tile2, direction);
+
+			if (tile2 != null)
+			{
+				wall = Instantiate(Resources.Load<GameObject>("Blocks/Wall")).GetComponent<TileEdge>();
+				wall.InitializeEdge(tile2, tile1, direction.GetOpposite());
+			}
+		}
+
+		private void BuildConnector(Tile tile1, Tile tile2, Enums.CardinalDirection direction)
+		{
+			TileEdge connector = Instantiate(Resources.Load<GameObject>("Blocks/Connector")).GetComponent<TileEdge>();
+			connector.InitializeEdge(tile1, tile2, direction);
+
+			connector = Instantiate(Resources.Load<GameObject>("Blocks/Connector")).GetComponent<TileEdge>();
+			connector.InitializeEdge(tile2, tile1, direction.GetOpposite());
 		}
 
 		private MapVector2 GetRandomPosition()
@@ -106,7 +165,7 @@ namespace MapGeneration
 
 		private void SpawnPlayer()
 		{
-			//GameManager.SpawnPlayerVehicle(this.Player_Spawn.position, this.Player_Spawn.rotation);
+			GetTile(GetRandomPosition()).SpawnPlayer();
 		}
 	}
 }
