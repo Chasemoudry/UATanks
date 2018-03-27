@@ -15,6 +15,7 @@ MonoBehaviour:
   - pbIconGUI
   - pb_SmoothingGroupEditor::m_ShowPreview
   - pbEnableBackfaceSelection
+  - pbUVMaterialPreview
   m_Int_keys:
   - pbHandleAlignment
   - pbDefaultEditLevel
@@ -29,7 +30,7 @@ MonoBehaviour:
   - pbCurrentMaterialPalette
   m_Color_keys: []
   m_Material_keys: []
-  m_Bool_values: 000001
+  m_Bool_values: 00000001
   m_Int_values: 0000000000000000020000000100000001000000
   m_Float_values:
   - 0

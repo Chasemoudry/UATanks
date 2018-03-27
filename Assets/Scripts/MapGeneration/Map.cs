@@ -60,6 +60,8 @@ namespace MapGeneration
 
 			yield return null;
 			this.SpawnPlayer();
+
+			CameraSystem.EnableCamera();
 		}
 
 		private void SpawnRemainingTiles(List<Tile> activeTiles)
@@ -74,7 +76,7 @@ namespace MapGeneration
 			}
 
 			Enums.CardinalDirection direction = currentTile.GetRandomUnintializedDirection();
-			MapVector2 newTilePosition = currentTile.tilePosition + direction.ToMapVector2();
+			MapVector2 newTilePosition = currentTile.TilePosition + direction.ToMapVector2();
 
 			if (this.IsValidCoordinate(newTilePosition))
 			{
@@ -116,7 +118,7 @@ namespace MapGeneration
 
 			this.TileMap[cellPosition.x, cellPosition.z] = newTile;
 
-			newTile.tilePosition = new MapVector2(cellPosition.x, cellPosition.z);
+			newTile.TilePosition = new MapVector2(cellPosition.x, cellPosition.z);
 			newTile.name += " Tile " + cellPosition.x + ", " + cellPosition.z;
 			newTile.transform.parent = this.transform;
 			newTile.transform.localPosition = new Vector3(cellPosition.x * 75, 0f, cellPosition.z * 75);

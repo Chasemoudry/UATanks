@@ -8,8 +8,10 @@ public class GameManager : MonoBehaviour
 	public static GameObject PlayerOne { get { return Instance.playerList[0]; } }
 
 	public MapGeneration.Map.MapVector2 mapSize;
-	public GameObject camSystem_PlayerOne;
-	public GameObject camSystem_PlayerTwo;
+	public bool MapOfTheDay = false;
+
+	//public GameObject camSystem_PlayerOne;
+	//public GameObject camSystem_PlayerTwo;
 
 	private static GameManager Instance { get; set; }
 
@@ -49,12 +51,13 @@ public class GameManager : MonoBehaviour
 		// TODO: Player Death
 		Instance.Event_GameOver += () => { Debug.LogWarning("Player Has Died!"); };
 
+
 		BeginGame();
 	}
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetKeyDown(KeyCode.R))
 		{
 			RestartGame();
 		}
@@ -62,6 +65,20 @@ public class GameManager : MonoBehaviour
 
 	private static void BeginGame()
 	{
+		CameraSystem.DisableCamera();
+
+		if (Instance.MapOfTheDay)
+		{
+			Random.InitState(System.Int32.Parse(
+				System.DateTime.Now.Year.ToString() +
+				System.DateTime.Now.Month.ToString() +
+				System.DateTime.Now.Day.ToString()));
+		}
+		else
+		{
+			Random.InitState((int)System.DateTime.Now.Ticks);
+		}
+
 		Instance.mapInstance = new GameObject().AddComponent<MapGeneration.Map>();
 		Instance.mapInstance.name = "Map Instance";
 		Instance.mapInstance.MapSize = Instance.mapSize;
@@ -86,9 +103,7 @@ public class GameManager : MonoBehaviour
 		Instance.enemyList.Clear();
 		Instance.playerList.Clear();
 
-		Instance.mapInstance = new GameObject().AddComponent<MapGeneration.Map>();
-		Instance.mapInstance.name = "Map Instance";
-		Instance.mapInstance.MapSize = Instance.mapSize;
+		BeginGame();
 	}
 
 	public static void RebuildNavMesh()
@@ -103,6 +118,7 @@ public class GameManager : MonoBehaviour
 	public static void IncrementPlayerScore(int amount)
 	{
 		Instance.playerScore += amount;
+
 #if UNITY_EDITOR
 		Debug.Log("Player Score is now = " + Instance.playerScore);
 #endif
@@ -122,7 +138,7 @@ public class GameManager : MonoBehaviour
 		else
 		{
 			Instance.playerList.Add(newObject);
-			Camera_FollowObject.ObjectToFollow = newObject.transform;
+			CameraSystem.ObjectToFollow = newObject.transform;
 		}
 	}
 

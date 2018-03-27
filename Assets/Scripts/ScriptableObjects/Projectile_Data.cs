@@ -16,11 +16,11 @@ public class Projectile_Data : ScriptableObject
 	[Header("Projectile Settings")]
 	[SerializeField]
 	private GameObject prefab;
-	[SerializeField, Range(1, 20)]
+	[SerializeField, Range(1, 50)]
 	private float projectileForce = 10;
 	[SerializeField, Range(0, 20)]
 	private int projectileDamage = 10;
-	[SerializeField, Range(0, 10)]
+	[SerializeField, Range(0, 5)]
 	private float fireRate = 1;
 	[SerializeField, Range(1, 5)]
 	private float timeoutDuration = 3;

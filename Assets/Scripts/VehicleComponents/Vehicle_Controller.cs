@@ -76,7 +76,7 @@ public class Vehicle_Controller : MonoBehaviour
 			// Turn left/right based on Horizontal Input Axis
 			this.vehicleHandler.Rotate(Input.GetAxis("Horizontal"));
 
-			if (Input.GetButtonDown("Primary Action"))
+			if (Input.GetButtonDown("Primary Action") || Input.GetButton("Primary Action"))
 			{
 				this.vehicleHandler.Raise_Action_Primary();
 			}

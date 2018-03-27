@@ -78,9 +78,9 @@ namespace Cinemachine
             mInitialized = true;
             mNoiseTime = 0;
             mNoiseOffsets = new Vector3(
-                    UnityEngine.Random.Range(-10000f, 10000f),
-                    UnityEngine.Random.Range(-10000f, 10000f),
-                    UnityEngine.Random.Range(-10000f, 10000f));
+					Random.Range(-10000f, 10000f),
+					Random.Range(-10000f, 10000f),
+					Random.Range(-10000f, 10000f));
         }
 
         static Vector3 GetCombinedFilterResults(

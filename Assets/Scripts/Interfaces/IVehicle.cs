@@ -16,4 +16,6 @@ public interface IVehicle
 	void Raise_Action_Primary();
 	void Raise_Action_Secondary();
 	void TakeDamage(int amount);
+	void HealDamage(int amount);
+	void ModifyMovespeed(int percentageAmount, float duration);
 }

@@ -9,7 +9,7 @@ namespace CustomBehaviours
 	{
 		/// <summary>Stopping distance of the NavMeshAgent for this behaviour.</summary>
 		[SerializeField, Tooltip("Stopping distance of the NavMeshAgent for this behaviour.")]
-		private float stoppingDistance = 10;
+		private float stoppingDistance = 5f;
 
 		/// <summary>Animator object's ISensor component.</summary>
 		private ISensor Sensor;
@@ -27,8 +27,20 @@ namespace CustomBehaviours
 
 		public override void OnStateUpdate(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
 		{
-			// Navigate towards current target
-			this.Navigator.NavAgent.SetDestination(this.Sensor.CurrentTarget.position);
+			if (this.Sensor.CurrentTarget != null)
+			{
+				// Navigate towards current target
+				this.Navigator.NavAgent.SetDestination(this.Sensor.CurrentTarget.position);
+			}
+
+			if (this.Navigator.NavAgent.velocity.magnitude <= 1)
+			{
+				animator.transform.LookAt(new Vector3(
+					this.Sensor.LastPOI.x,
+					animator.transform.position.y,
+					this.Sensor.LastPOI.z
+				));
+			}
 		}
 	}
 }

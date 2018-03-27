@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 [DisallowMultipleComponent, RequireComponent(typeof(Collider))]
 public class Vehicle_Mover : MonoBehaviour, IVehicle
@@ -15,12 +16,17 @@ public class Vehicle_Mover : MonoBehaviour, IVehicle
 	// IVehicle: Property for local variable VehicleData vehicleData
 	public Vehicle_Data Data { get { return this.vehicleData; } }
 
+	// TODO: Rearrange data accessors for IVehicle interface
+	public float ForwardSpeed { get { return this.Data.ForwardSpeed * this.multiplier_Movespeed; } }
+	public float ReverseSpeed { get { return this.Data.ReverseSpeed * this.multiplier_Movespeed; } }
+
 	// IVehicle: Property for local variable int currentHealth
 	public int CurrentHealth
 	{
 		get
 		{
 			this.OnHealthChanged();
+
 			return this.currentHealth;
 		}
 	}
@@ -36,6 +42,8 @@ public class Vehicle_Mover : MonoBehaviour, IVehicle
 	private CharacterController controller;
 	// Local reference to Transform component.
 	private Transform tf;
+	// Movespeed multiplier
+	private float multiplier_Movespeed = 1f;
 
 	private void Awake()
 	{
@@ -57,11 +65,11 @@ public class Vehicle_Mover : MonoBehaviour, IVehicle
 	{
 		if (movementAxisValue > 0)
 		{
-			movementAxisValue *= this.Data.ForwardSpeed;
+			movementAxisValue *= this.ForwardSpeed;
 		}
 		else
 		{
-			movementAxisValue *= this.Data.ReverseSpeed;
+			movementAxisValue *= this.ReverseSpeed;
 		}
 
 		this.controller.SimpleMove(movementAxisValue * this.tf.forward);
@@ -125,5 +133,39 @@ public class Vehicle_Mover : MonoBehaviour, IVehicle
 				this.OnDeath();
 			}
 		}
+	}
+
+	/// <summary>
+	/// IVehicle: Heals the vehicle based on given parameters.
+	/// </summary>
+	/// <param name="amount">Amount of damage being healed.</param>
+	public void HealDamage(int amount)
+	{
+		// Decrements health
+		this.currentHealth += amount;
+
+		// if: Current health is above max health, set current to max
+		if (this.currentHealth > this.Data.MaxHealth)
+		{
+			this.currentHealth = this.Data.MaxHealth;
+		}
+
+#if UNITY_EDITOR
+		Debug.Log(this.name + "'s Health is now = " + this.currentHealth, this);
+#endif
+	}
+
+	public void ModifyMovespeed(int percentageIncrease, float effectDuration)
+	{
+		this.StartCoroutine(this.Effect_Movespeed(percentageIncrease, effectDuration));
+	}
+
+	private IEnumerator Effect_Movespeed(int percentageIncrease, float effectDuration)
+	{
+		this.multiplier_Movespeed += percentageIncrease * 0.01f;
+
+		yield return new WaitForSeconds(effectDuration);
+
+		this.multiplier_Movespeed -= percentageIncrease * 0.01f;
 	}
 }

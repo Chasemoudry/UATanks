@@ -613,7 +613,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileData: {fileID: 11400000, guid: 8bca573ff1de56f438bf8cbee243236e, type: 2}
   launchPosition: {fileID: 4160357853224122}
-  launchAngle: 0
+  launchAngle: 10
 --- !u!114 &114538154399758460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -637,6 +637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a3b6f9589bd4a84cb99b9511fbf4e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controllerType: 0
 --- !u!143 &143564931808415066
 CharacterController:
   m_ObjectHideFlags: 1

@@ -6,7 +6,7 @@ public class Projectile_Collider : MonoBehaviour
 	[HideInInspector]
 	public int damage;
 
-	private void OnCollisionEnter(Collision collision)
+	private void OnTriggerEnter(Collider collision)
 	{
 		if (collision.gameObject.CompareTag(this.tag) == false)
 		{

@@ -14,15 +14,14 @@ namespace MapGeneration
 
 		public bool IsInitialized { get { return this.initializedEdgeCount == MapDirections.Count; } }
 
-		public Map.MapVector2 tilePosition;
-		public Transform Player_Spawn;
+		public Map.MapVector2 TilePosition { get; set; }
 
 		private const string ResourcePrefix = "Ship_AI_";
 
 		[SerializeField]
-		private AISpawnInfo[] AI_Spawns;
+		private Transform Player_Spawn;
 		[SerializeField]
-		private Transform[] Pickup_Spawns;
+		private AISpawnInfo[] AI_Spawns;
 		[SerializeField]
 		private Transform floorObject;
 

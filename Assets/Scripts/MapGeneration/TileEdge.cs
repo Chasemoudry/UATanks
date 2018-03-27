@@ -6,13 +6,13 @@ namespace MapGeneration
 	{
 		public Tile thisTile;
 		public Tile otherTile;
-		Enums.CardinalDirection direction;
+		//Enums.CardinalDirection direction;
 
 		public void InitializeEdge(Tile thisTile, Tile otherTile, Enums.CardinalDirection direction)
 		{
 			this.thisTile = thisTile;
 			this.otherTile = otherTile;
-			this.direction = direction;
+			//this.direction = direction;
 
 			thisTile.SetEdge(direction, this);
 			this.transform.parent = thisTile.transform;

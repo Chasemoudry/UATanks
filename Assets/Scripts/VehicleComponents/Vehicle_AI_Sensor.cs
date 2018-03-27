@@ -81,7 +81,7 @@ public class Vehicle_AI_Sensor : MonoBehaviour, ISensor
 				this.CurrentTarget = null;
 
 				// TODO: Automatic array sizing
-				Physics.OverlapSphereNonAlloc(this.transform.position, this.sightRadius, this.colliders, this.sightLayerMask);
+				Physics.OverlapSphereNonAlloc(this.transform.position, this.hearingDistance, this.colliders, this.sightLayerMask);
 
 				foreach (Collider potentialTarget in this.colliders)
 				{

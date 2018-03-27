@@ -614,9 +614,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3682a4e3b1324104da1b4b6e6fc9f906, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileData: {fileID: 11400000, guid: 8bca573ff1de56f438bf8cbee243236e, type: 2}
+  projectileData: {fileID: 11400000, guid: fa90cce7865c685478c7220526fa399f, type: 2}
   launchPosition: {fileID: 4311830275181992}
-  launchAngle: 0
+  launchAngle: 10
 --- !u!114 &114286940095428846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -632,7 +632,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 257
   sightRadius: 15
-  sightFOV_Total: 45
+  sightFOV_Total: 60
   sightFOV_Focused: 15
   hearingDistance: 10
 --- !u!114 &114310801584356458

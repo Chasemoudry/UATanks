@@ -30,6 +30,14 @@ namespace CustomBehaviours
 			// Navigate towards target's last known position
 			this.Navigator.NavAgent.SetDestination(this.Sensor.LastPOI);
 
+			if (this.Navigator.NavAgent.velocity == Vector3.zero)
+			{
+				animator.transform.LookAt(new Vector3(
+					this.Sensor.LastPOI.x,
+					animator.transform.position.y,
+					this.Sensor.LastPOI.z
+				));
+			}
 			// TODO: Add timeout -> exit once destination is reached
 		}
 	}
