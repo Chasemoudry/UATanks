@@ -1,38 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using MapGeneration;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 [DisallowMultipleComponent]
 public class GameManager : MonoBehaviour
 {
-	public static GameObject PlayerOne { get { return Instance.playerList[0]; } }
+	public static GameObject PlayerOne
+	{
+		get { return Instance._playerList[0]; }
+	}
 
-	public MapGeneration.Map.MapVector2 mapSize;
-	public bool MapOfTheDay = false;
+	public Map.MapVector2 MapSize = new Map.MapVector2(5, 5);
+	public bool MapOfTheDay = true;
 
 	//public GameObject camSystem_PlayerOne;
 	//public GameObject camSystem_PlayerTwo;
 
 	private static GameManager Instance { get; set; }
 
-	private event System.Action Event_GameOver;
-	private MapGeneration.Map mapInstance;
+	private event Action EventGameOver;
 
-#if DEBUG
-	[Header("DEBUG")]
-	[SerializeField]
-#endif
-	private int playerScore;
-
-#if DEBUG
-	[SerializeField]
-#endif
-	private List<GameObject> playerList = new List<GameObject>();
-
-#if DEBUG
-	[SerializeField]
-#endif
-	private List<GameObject> enemyList = new List<GameObject>();
+	private Map _mapInstance;
+	private int _playerScore;
+	private List<GameObject> _playerList;
+	private List<GameObject> _enemyList;
 
 	private void Awake()
 	{
@@ -44,13 +38,15 @@ public class GameManager : MonoBehaviour
 		{
 			Destroy(this);
 		}
+
+		this._playerList = new List<GameObject>();
+		this._enemyList = new List<GameObject>();
 	}
 
 	private void Start()
 	{
 		// TODO: Player Death
-		Instance.Event_GameOver += () => { Debug.LogWarning("Player Has Died!"); };
-
+		Instance.EventGameOver += () => { Debug.LogWarning("Player Has Died!"); };
 
 		BeginGame();
 	}
@@ -69,39 +65,39 @@ public class GameManager : MonoBehaviour
 
 		if (Instance.MapOfTheDay)
 		{
-			Random.InitState(System.Int32.Parse(
-				System.DateTime.Now.Year.ToString() +
-				System.DateTime.Now.Month.ToString() +
-				System.DateTime.Now.Day.ToString()));
+			Random.InitState(Int32.Parse(
+				DateTime.Now.Year +
+				DateTime.Now.Month.ToString() +
+				DateTime.Now.Day));
 		}
 		else
 		{
-			Random.InitState((int)System.DateTime.Now.Ticks);
+			Random.InitState((int)DateTime.Now.Ticks);
 		}
 
-		Instance.mapInstance = new GameObject().AddComponent<MapGeneration.Map>();
-		Instance.mapInstance.name = "Map Instance";
-		Instance.mapInstance.MapSize = Instance.mapSize;
+		Instance._mapInstance = new GameObject().AddComponent<Map>();
+		Instance._mapInstance.name = "Map Instance";
+		Instance._mapInstance.MapSize = Instance.MapSize;
 	}
 
 	private static void EndGame()
 	{
-		Destroy(Instance.mapInstance.gameObject);
-		Instance.playerList.Clear();
-		Instance.enemyList.Clear();
+		Destroy(Instance._mapInstance.gameObject);
+		Instance._playerList.Clear();
+		Instance._enemyList.Clear();
 	}
 
 	private static void RestartGame()
 	{
-		Destroy(Instance.mapInstance.gameObject);
+		Destroy(Instance._mapInstance.gameObject);
 
-		for (int i = Instance.playerList.Count - 1; i >= 0; i--)
+		for (int i = Instance._playerList.Count - 1; i >= 0; i--)
 		{
-			Destroy(Instance.playerList[i]);
+			Destroy(Instance._playerList[i]);
 		}
 
-		Instance.enemyList.Clear();
-		Instance.playerList.Clear();
+		Instance._enemyList.Clear();
+		Instance._playerList.Clear();
 
 		BeginGame();
 	}
@@ -117,10 +113,10 @@ public class GameManager : MonoBehaviour
 	/// <param name="amount">The amount of points being added to the current score.</param>
 	public static void IncrementPlayerScore(int amount)
 	{
-		Instance.playerScore += amount;
+		Instance._playerScore += amount;
 
 #if UNITY_EDITOR
-		Debug.Log("Player Score is now = " + Instance.playerScore);
+		Debug.Log("Player Score is now = " + Instance._playerScore);
 #endif
 	}
 
@@ -137,19 +133,21 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			Instance.playerList.Add(newObject);
+			Instance._playerList.Add(newObject);
 			CameraSystem.ObjectToFollow = newObject.transform;
 		}
 	}
 
 	public static void DespawnPlayerVehicle(GameObject gameObject)
 	{
-		if (gameObject != null)
+		if (gameObject == null)
 		{
-			Instance.playerList.Remove(gameObject);
-			// OPTION: Remove from object pool
-			Destroy(gameObject);
+			return;
 		}
+
+		Instance._playerList.Remove(gameObject);
+		// OPTION: Remove from object pool
+		Destroy(gameObject);
 	}
 
 	public static GameObject SpawnAIVehicle(string prefabAssetPath, Vector3 spawnPosition,
@@ -164,18 +162,28 @@ public class GameManager : MonoBehaviour
 			newObject.GetComponent<INavigator>().SetWaypoints(waypoints);
 		}
 
-		Instance.enemyList.Add(newObject);
+		Instance._enemyList.Add(newObject);
 
 		return newObject;
 	}
 
 	public static void DespawnAIVehicle(GameObject gameObject)
 	{
-		if (gameObject != null)
+		if (gameObject == null)
 		{
-			Instance.enemyList.Remove(gameObject);
-			// OPTION: Remove from object pool
-			Destroy(gameObject);
+			return;
+		}
+
+		Instance._enemyList.Remove(gameObject);
+		// OPTION: Remove from object pool
+		Destroy(gameObject);
+	}
+
+	public void OnEventGameOver()
+	{
+		if (this.EventGameOver != null)
+		{
+			this.EventGameOver();
 		}
 	}
 }

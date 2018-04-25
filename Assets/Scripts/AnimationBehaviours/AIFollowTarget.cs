@@ -1,44 +1,45 @@
 ﻿using UnityEngine;
 
-namespace CustomBehaviours
+namespace AnimationBehaviours
 {
+	/// <inheritdoc />
 	/// <summary>
 	/// Custom StateMachineBehaviour which navigates animator object towards ISensor's CurrentTarget.
 	/// </summary>
-	public class AI_Follow_Target : StateMachineBehaviour
+	public class AIFollowTarget : StateMachineBehaviour
 	{
 		/// <summary>Stopping distance of the NavMeshAgent for this behaviour.</summary>
 		[SerializeField, Tooltip("Stopping distance of the NavMeshAgent for this behaviour.")]
-		private float stoppingDistance = 5f;
+		private float _stoppingDistance = 5f;
 
 		/// <summary>Animator object's ISensor component.</summary>
-		private ISensor Sensor;
+		private ISensor _sensor;
 		/// <summary>Animator object's INavigator component.</summary>
-		private INavigator Navigator;
+		private INavigator _navigator;
 
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
 		{
-			this.Sensor = animator.GetComponent<ISensor>();
-			this.Navigator = animator.GetComponent<INavigator>();
+			this._sensor = animator.GetComponent<ISensor>();
+			this._navigator = animator.GetComponent<INavigator>();
 
 			// Set stopping distance for this behaviour
-			this.Navigator.NavAgent.stoppingDistance = this.stoppingDistance;
+			this._navigator.NavAgent.stoppingDistance = this._stoppingDistance;
 		}
 
 		public override void OnStateUpdate(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
 		{
-			if (this.Sensor.CurrentTarget != null)
+			if (this._sensor.CurrentTarget != null)
 			{
 				// Navigate towards current target
-				this.Navigator.NavAgent.SetDestination(this.Sensor.CurrentTarget.position);
+				this._navigator.NavAgent.SetDestination(this._sensor.CurrentTarget.position);
 			}
 
-			if (this.Navigator.NavAgent.velocity.magnitude <= 1)
+			if (this._navigator.NavAgent.velocity.magnitude <= 1)
 			{
 				animator.transform.LookAt(new Vector3(
-					this.Sensor.LastPOI.x,
+					this._sensor.LastPOI.x,
 					animator.transform.position.y,
-					this.Sensor.LastPOI.z
+					this._sensor.LastPOI.z
 				));
 			}
 		}

@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 23052549139738846}
   - component: {fileID: 95429016413169838}
   - component: {fileID: 143359162846115548}
-  - component: {fileID: 114310801584356458}
+  - component: {fileID: 114708758534768082}
   - component: {fileID: 114019778476846010}
   - component: {fileID: 114024183605604956}
   - component: {fileID: 114286940095428846}
@@ -658,7 +658,7 @@ MonoBehaviour:
   sightFOV_Total: 60
   sightFOV_Focused: 15
   hearingDistance: 10
---- !u!114 &114310801584356458
+--- !u!114 &114708758534768082
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -666,10 +666,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1223179260344716}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32a73de94092bbc40a84a71e71d165aa, type: 3}
+  m_Script: {fileID: 11500000, guid: d4f9853fec99c0c44953517960105368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vehicleData: {fileID: 11400000, guid: edce6f8df99ef474d8c44f0892966b55, type: 2}
+  _vehicleData: {fileID: 11400000, guid: edce6f8df99ef474d8c44f0892966b55, type: 2}
 --- !u!143 &143359162846115548
 CharacterController:
   m_ObjectHideFlags: 1

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CustomBehaviours
+namespace AnimationBehaviours
 {
 	/// <summary>
 	/// Custom StateMachineBehaviour which handles attack events.

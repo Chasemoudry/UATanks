@@ -3,7 +3,7 @@
 	/// <summary>
 	/// All spawnable AI types listed by behaviour.
 	/// </summary>
-	public enum AI_BehaviourType : byte
+	public enum BehaviourType : byte
 	{
 		Stationary,
 		Cautious,

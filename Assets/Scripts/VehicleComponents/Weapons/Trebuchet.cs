@@ -32,12 +32,12 @@ public class Trebuchet : MonoBehaviour, IWeapon
 
 	private void OnEnable()
 	{
-		this.GetComponent<IVehicle>().Action_Primary += this.TriggerAnimation;
+		this.GetComponent<IVehicle>().PrimarySkill += this.TriggerAnimation;
 	}
 
 	private void OnDisable()
 	{
-		this.GetComponent<IVehicle>().Action_Primary -= this.TriggerAnimation;
+		this.GetComponent<IVehicle>().PrimarySkill -= this.TriggerAnimation;
 	}
 
 	public void TriggerAnimation()

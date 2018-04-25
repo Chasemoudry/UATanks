@@ -28,5 +28,5 @@ public class Vehicle_Data : ScriptableObject
 	[Header("Score Settings")]
 	[Tooltip("The amount of points this vehicle awards on destruction.")]
 	[SerializeField, Range(0, 200)]
-	private int vehicleWorth = 0;
+	private int vehicleWorth;
 }

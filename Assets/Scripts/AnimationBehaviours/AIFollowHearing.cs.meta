@@ -1,12 +1,11 @@
 fileFormatVersion: 2
-guid: 32a73de94092bbc40a84a71e71d165aa
-timeCreated: 1520569914
+guid: 53da276b3359f3b4cb4742a574d386d9
+timeCreated: 1524558739
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - vehicleData: {fileID: 11400000, guid: edce6f8df99ef474d8c44f0892966b55, type: 2}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

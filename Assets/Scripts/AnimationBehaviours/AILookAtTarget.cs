@@ -1,28 +1,31 @@
 ﻿using UnityEngine;
 
-namespace CustomBehaviours
+namespace AnimationBehaviours
 {
+	/// <inheritdoc />
 	/// <summary>
 	/// Custom StateMachineBehaviour which rotates animator object towards ISensor's CurrentTarget.
 	/// </summary>
-	public class AI_LookAt_Target : StateMachineBehaviour
+	public class AILookAtTarget : StateMachineBehaviour
 	{
 		/// <summary>Animator object's ISensor component.</summary>
-		private ISensor Sensor;
+		private ISensor _sensor;
 		/// <summary>Animator object's INavigator component.</summary>
-		private INavigator Navigator;
+		private INavigator _navigator;
 
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
 		{
-			this.Sensor = animator.GetComponent<ISensor>();
-			this.Navigator = animator.GetComponent<INavigator>();
+			this._sensor = animator.GetComponent<ISensor>();
+			this._navigator = animator.GetComponent<INavigator>();
 
-			// if: animator object has an INavigator, stop navigation
-			if (this.Navigator != null)
+			if (this._navigator == null)
 			{
-				this.Navigator.NavAgent.speed = 0;
-				this.Navigator.NavAgent.isStopped = true;
+				return;
 			}
+
+			// Stop navigation
+			this._navigator.NavAgent.speed = 0;
+			this._navigator.NavAgent.isStopped = true;
 		}
 
 		public override void OnStateUpdate(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -31,18 +34,18 @@ namespace CustomBehaviours
 			// TODO: Change to Quaternion.LookRotation for rotation slerping
 			animator.transform.LookAt(
 				new Vector3(
-					this.Sensor.LastPOI.x,
+					this._sensor.LastPOI.x,
 					animator.transform.position.y,
-					this.Sensor.LastPOI.z
+					this._sensor.LastPOI.z
 				));
 		}
 
 		public override void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
 		{
 			// if: animator object has an INavigator, resume navigation
-			if (this.Navigator != null)
+			if (this._navigator != null)
 			{
-				this.Navigator.NavAgent.isStopped = false;
+				this._navigator.NavAgent.isStopped = false;
 			}
 		}
 	}

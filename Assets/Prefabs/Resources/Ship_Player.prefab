@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 23789300935816700}
   - component: {fileID: 95527230838969762}
   - component: {fileID: 143564931808415066}
-  - component: {fileID: 114538154399758460}
+  - component: {fileID: 114325279244229140}
   - component: {fileID: 114639076145795268}
   - component: {fileID: 114286930796140624}
   m_Layer: 8
@@ -614,7 +614,7 @@ MonoBehaviour:
   projectileData: {fileID: 11400000, guid: 8bca573ff1de56f438bf8cbee243236e, type: 2}
   launchPosition: {fileID: 4160357853224122}
   launchAngle: 10
---- !u!114 &114538154399758460
+--- !u!114 &114325279244229140
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -622,10 +622,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1876692144758630}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32a73de94092bbc40a84a71e71d165aa, type: 3}
+  m_Script: {fileID: 11500000, guid: d4f9853fec99c0c44953517960105368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vehicleData: {fileID: 11400000, guid: ae56a739f48793344900c74859284307, type: 2}
+  _vehicleData: {fileID: 11400000, guid: ae56a739f48793344900c74859284307, type: 2}
 --- !u!114 &114639076145795268
 MonoBehaviour:
   m_ObjectHideFlags: 1

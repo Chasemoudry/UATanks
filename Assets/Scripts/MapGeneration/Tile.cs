@@ -8,7 +8,7 @@ namespace MapGeneration
 		private struct AISpawnInfo
 		{
 			public Transform spawnPosition;
-			public Enums.AI_BehaviourType behaviourType;
+			public Enums.BehaviourType behaviourType;
 			public Transform[] waypoints;
 		}
 
