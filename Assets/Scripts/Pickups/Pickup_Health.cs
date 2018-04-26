@@ -1,17 +1,22 @@
-﻿public class Pickup_Health : Pickup
+﻿using UnityEngine;
+
+namespace Pickups
 {
-	[UnityEngine.Header("Effect Settings")]
-	[UnityEngine.SerializeField]
-	private ushort healAmount = 10;
-
-	protected override void Start()
+	public class Pickup_Health : Pickup
 	{
-		this.OnActivation += this.HealObject;
-		base.Start();
-	}
+		[Header("Effect Settings")]
+		[SerializeField]
+		private ushort healAmount = 10;
 
-	private void HealObject(IVehicle other)
-	{
-		other.HealDamage(this.healAmount);
+		protected override void Start()
+		{
+			this.OnActivation += this.HealObject;
+			base.Start();
+		}
+
+		private void HealObject(IVehicle other)
+		{
+			other.HealDamage(this.healAmount);
+		}
 	}
 }

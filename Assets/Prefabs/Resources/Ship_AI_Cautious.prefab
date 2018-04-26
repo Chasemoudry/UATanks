@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 23052549139738846}
   - component: {fileID: 95429016413169838}
   - component: {fileID: 143359162846115548}
-  - component: {fileID: 114612409867672692}
+  - component: {fileID: 114880032496302936}
   - component: {fileID: 114804897093316888}
   - component: {fileID: 114998511421831926}
   - component: {fileID: 114286940095428846}
@@ -635,18 +635,6 @@ MonoBehaviour:
   sightFOV_Total: 60
   sightFOV_Focused: 15
   hearingDistance: 10
---- !u!114 &114612409867672692
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1223179260344716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4f9853fec99c0c44953517960105368, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _vehicleData: {fileID: 11400000, guid: edce6f8df99ef474d8c44f0892966b55, type: 2}
 --- !u!114 &114804897093316888
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -659,6 +647,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controllerType: 1
+--- !u!114 &114880032496302936
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1223179260344716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb7715f374f80e54cb936e635ebb5ab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _vehicleData: {fileID: 11400000, guid: edce6f8df99ef474d8c44f0892966b55, type: 2}
 --- !u!114 &114998511421831926
 MonoBehaviour:
   m_ObjectHideFlags: 1

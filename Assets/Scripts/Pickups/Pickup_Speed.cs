@@ -1,19 +1,24 @@
-﻿public class Pickup_Speed : Pickup
+﻿using UnityEngine;
+
+namespace Pickups
 {
-	[UnityEngine.Header("Effect Settings")]
-	[UnityEngine.SerializeField, UnityEngine.Range(1, 100)]
-	private ushort speedPercentage = 20;
-	[UnityEngine.SerializeField]
-	private float effectDuration = 3f;
-
-	protected override void Start()
+	public class Pickup_Speed : Pickup
 	{
-		this.OnActivation += this.SpeedBoost;
-		base.Start();
-	}
+		[Header("Effect Settings")]
+		[SerializeField, Range(1, 100)]
+		private ushort speedPercentage = 20;
+		[SerializeField]
+		private float effectDuration = 3f;
 
-	private void SpeedBoost(IVehicle other)
-	{
-		other.ModifyMovespeed(this.speedPercentage, this.effectDuration);
+		protected override void Start()
+		{
+			this.OnActivation += this.SpeedBoost;
+			base.Start();
+		}
+
+		private void SpeedBoost(IVehicle other)
+		{
+			other.ModifyMovespeed(this.speedPercentage, this.effectDuration);
+		}
 	}
 }

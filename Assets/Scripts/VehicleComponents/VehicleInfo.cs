@@ -2,13 +2,13 @@
 using UnityEngine;
 
 [DisallowMultipleComponent, RequireComponent(typeof(CharacterController))]
-public class VehicleData : MonoBehaviour, IVehicle
+public class VehicleInfo : MonoBehaviour, IVehicle
 {
 	// IVehicle || Event: Triggered when action condition is met
 	public event System.Action PrimarySkill;
 	// IVehicle || Event: Triggered when action condition is met
 	public event System.Action SecondarySkill;
-	// IVehicle || Event: Triggered when vehicle health reaches zero
+	// IVehicle || Event: Triggered when vehicle durability reaches zero
 	public event System.Action Death;
 	// IVehicle || Event: Triggered when health property is changed
 	public event System.Action DurabilityChanged;

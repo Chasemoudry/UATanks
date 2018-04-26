@@ -61,7 +61,7 @@ namespace MapGeneration
 			yield return null;
 			this.SpawnPlayer();
 
-			CameraSystem.EnableCamera();
+			CustomCamera.CameraSystem.EnableCamera();
 		}
 
 		private void SpawnRemainingTiles(List<Tile> activeTiles)

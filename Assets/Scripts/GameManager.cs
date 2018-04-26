@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
 
 	private static void BeginGame()
 	{
-		CameraSystem.DisableCamera();
+		CustomCamera.CameraSystem.DisableCamera();
 
 		if (Instance.MapOfTheDay)
 		{
@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
 		else
 		{
 			Instance._playerList.Add(newObject);
-			CameraSystem.ObjectToFollow = newObject.transform;
+			CustomCamera.CameraSystem.ObjectToFollow = newObject.transform;
 		}
 	}
 

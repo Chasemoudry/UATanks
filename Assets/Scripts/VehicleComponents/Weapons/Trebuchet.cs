@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(IVehicle))]
-public class Trebuchet : MonoBehaviour, IWeapon
+public class Trebuchet : MonoBehaviour
 {
 	private const float attackAnimationLength = 1.5f;
 
