@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MapGeneration;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 [DisallowMultipleComponent]
@@ -10,23 +11,34 @@ public class GameManager : MonoBehaviour
 {
 	public static GameObject PlayerOne
 	{
-		get { return Instance._playerList[0]; }
+		get
+		{
+			if (Instance == null)
+			{
+				return null;
+			}
+
+			return Instance._playerList[0];
+		}
 	}
 
-	public Map.MapVector2 MapSize = new Map.MapVector2(5, 5);
-	public bool MapOfTheDay = true;
-
-	//public GameObject camSystem_PlayerOne;
-	//public GameObject camSystem_PlayerTwo;
+	public static int PlayerScore { get { return Instance._playerScore; } }
 
 	private static GameManager Instance { get; set; }
 
-	private event Action EventGameOver;
+	private event Action GameOver;
+
+	[SerializeField]
+	private Dropdown _mapSizeXDropdown;
+	[SerializeField]
+	private Dropdown _mapSizeYDropdown;
+	[SerializeField]
+	private Toggle _mapOfTheDayToggle;
 
 	private Map _mapInstance;
 	private int _playerScore;
-	private List<GameObject> _playerList;
-	private List<GameObject> _enemyList;
+	private List<GameObject> _playerList = new List<GameObject>();
+	private List<GameObject> _enemyList = new List<GameObject>();
 
 	private void Awake()
 	{
@@ -46,24 +58,32 @@ public class GameManager : MonoBehaviour
 	private void Start()
 	{
 		// TODO: Player Death
-		Instance.EventGameOver += () => { Debug.LogWarning("Player Has Died!"); };
-
-		BeginGame();
+		Instance.GameOver +=
+			() =>
+			{
+				Debug.LogWarning("Player Has Died!");
+				EndGame();
+			};
 	}
 
-	private void Update()
+	public void ExitToDesktop()
 	{
-		if (Input.GetKeyDown(KeyCode.R))
-		{
-			RestartGame();
-		}
+#if UNITY_EDITOR
+		UnityEditor.EditorApplication.isPlaying = false;
+#else
+		Application.Quit();
+#endif
 	}
 
-	private static void BeginGame()
+	public void BeginGame()
 	{
+		// Main camera and UI is turned back on after the map is generated
 		CustomCamera.CameraSystem.DisableCamera();
+		UIMenuNavigator.DisableAllUI();
 
-		if (Instance.MapOfTheDay)
+		Instance._playerScore = 0;
+
+		if (Instance._mapOfTheDayToggle.isOn)
 		{
 			Random.InitState(Int32.Parse(
 				DateTime.Now.Year +
@@ -77,17 +97,27 @@ public class GameManager : MonoBehaviour
 
 		Instance._mapInstance = new GameObject().AddComponent<Map>();
 		Instance._mapInstance.name = "Map Instance";
-		Instance._mapInstance.MapSize = Instance.MapSize;
+		Instance._mapInstance.MapSize = new Map.MapVector2(
+			Instance._mapSizeXDropdown.value + 1, Instance._mapSizeYDropdown.value + 1);
 	}
 
-	private static void EndGame()
+	public static void EndGame()
 	{
 		Destroy(Instance._mapInstance.gameObject);
+
+		for (int i = Instance._playerList.Count - 1; i >= 0; i--)
+		{
+			Destroy(Instance._playerList[i]);
+		}
+
 		Instance._playerList.Clear();
 		Instance._enemyList.Clear();
+
+		UIMenuNavigator.SwitchToPostGameUI();
+		StatsWindow.UpdateStats();
 	}
 
-	private static void RestartGame()
+	public void RestartGame()
 	{
 		Destroy(Instance._mapInstance.gameObject);
 
@@ -99,7 +129,7 @@ public class GameManager : MonoBehaviour
 		Instance._enemyList.Clear();
 		Instance._playerList.Clear();
 
-		BeginGame();
+		Instance.BeginGame();
 	}
 
 	public static void RebuildNavMesh()
@@ -177,13 +207,18 @@ public class GameManager : MonoBehaviour
 		Instance._enemyList.Remove(gameObject);
 		// OPTION: Remove from object pool
 		Destroy(gameObject);
+
+		if (Instance._enemyList.Count == 0)
+		{
+			EndGame();
+		}
 	}
 
-	public void OnEventGameOver()
+	public static void RaiseGameOver()
 	{
-		if (this.EventGameOver != null)
+		if (Instance.GameOver != null)
 		{
-			this.EventGameOver();
+			Instance.GameOver();
 		}
 	}
 }

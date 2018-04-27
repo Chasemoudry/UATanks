@@ -62,6 +62,7 @@ namespace MapGeneration
 			this.SpawnPlayer();
 
 			CustomCamera.CameraSystem.EnableCamera();
+			UIMenuNavigator.SwitchToInGameUI();
 		}
 
 		private void SpawnRemainingTiles(List<Tile> activeTiles)

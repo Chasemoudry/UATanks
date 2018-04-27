@@ -34,31 +34,20 @@ public class Vehicle_Controller : MonoBehaviour
 						this.StopCoroutine("ProcessInputs");
 						// Despawn this vehicle
 						GameManager.DespawnPlayerVehicle(this.gameObject);
-					};
-				// Add a sequence to the death event
-				this.vehicleHandler.Death +=
-					() =>
-					{
-						// Despawn this vehicle
-						GameManager.DespawnAIVehicle(this.gameObject);
+						GameManager.RaiseGameOver();
 					};
 				break;
 			// Vehicle is controlled by an AI
 			case ControllerType.AI:
 				// Add a handler to the death event
-				this.vehicleHandler.Death += () =>
-				{
-					// Increment player score
-					GameManager.IncrementPlayerScore(this.vehicleHandler.Data.VehicleWorth);
-				};
-
-				// Add a handler to the death event
-				this.vehicleHandler.Death += () =>
-				{
-					// Despawn this vehicle
-					GameManager.DespawnAIVehicle(this.gameObject);
-				};
-
+				this.vehicleHandler.Death +=
+					() =>
+					{
+						// Increment player score
+						GameManager.IncrementPlayerScore(this.vehicleHandler.Data.VehicleWorth);
+						// Despawn this vehicle
+						GameManager.DespawnAIVehicle(this.gameObject);
+					};
 				break;
 			default:
 				Debug.LogError("Invalid Controller Type!");
@@ -97,9 +86,15 @@ public class Vehicle_Controller : MonoBehaviour
 			{
 				this.vehicleHandler.OnPrimarySkill();
 			}
-			else if (Input.GetButtonDown("Secondary Action"))
+
+			if (Input.GetButtonDown("Secondary Action"))
 			{
 				this.vehicleHandler.OnSecondarySkill();
+			}
+
+			if (Input.GetKeyDown(KeyCode.Escape))
+			{
+				GameManager.EndGame();
 			}
 
 			yield return null;

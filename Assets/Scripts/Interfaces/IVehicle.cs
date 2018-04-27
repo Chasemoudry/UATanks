@@ -9,7 +9,7 @@ public interface IVehicle
 	event System.Action DurabilityChanged;
 
 	Vehicle_Data Data { get; }
-	int CurrentDurability { get; set; }
+	int CurrentDurability { get; }
 
 	void Move(float movementAxis);
 	void Rotate(float rotationAxis);

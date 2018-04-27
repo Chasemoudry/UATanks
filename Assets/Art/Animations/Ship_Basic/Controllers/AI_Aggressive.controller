@@ -68,7 +68,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22160947965ece146badec6e9d06fcd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stoppingDistance: 5
+  _stoppingDistance: 5
+--- !u!114 &114259574713062740
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53da276b3359f3b4cb4742a574d386d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stoppingDistance: 10
+--- !u!114 &114328228377360032
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5507aacdb806b547b3da12883db1dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114484961474261298
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -80,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22160947965ece146badec6e9d06fcd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stoppingDistance: 5
+  _stoppingDistance: 5
 --- !u!114 &114671824317900920
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -332,7 +355,7 @@ AnimatorState:
   - {fileID: 1101482684489456978}
   - {fileID: 1101009794146764862}
   m_StateMachineBehaviours:
-  - {fileID: 114088970171146914}
+  - {fileID: 114259574713062740}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -360,7 +383,7 @@ AnimatorState:
   - {fileID: 1101508154024038980}
   - {fileID: 1101863296633548834}
   m_StateMachineBehaviours:
-  - {fileID: 114671824317900920}
+  - {fileID: 114328228377360032}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

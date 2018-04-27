@@ -24,7 +24,7 @@ public class VehicleInfo : MonoBehaviour, IVehicle
 			return this._currentDurability;
 		}
 
-		set
+		private set
 		{
 			this._currentDurability = value;
 
@@ -56,7 +56,7 @@ public class VehicleInfo : MonoBehaviour, IVehicle
 	private void Start()
 	{
 		// Set current health equal to max health
-		this._currentDurability = this.Data.MaxHealth;
+		this.CurrentDurability = this.Data.MaxHealth;
 	}
 
 	/// <summary>
@@ -116,7 +116,7 @@ public class VehicleInfo : MonoBehaviour, IVehicle
 		}
 	}
 
-	private void OnDurabilityChanged()
+	public void OnDurabilityChanged()
 	{
 		System.Action handler = this.DurabilityChanged;
 
@@ -128,7 +128,7 @@ public class VehicleInfo : MonoBehaviour, IVehicle
 		}
 	}
 
-	private void OnDeath()
+	public void OnDeath()
 	{
 		System.Action handler = this.Death;
 
@@ -147,14 +147,14 @@ public class VehicleInfo : MonoBehaviour, IVehicle
 	public void TakeDamage(int amount)
 	{
 		// Decrements health
-		this._currentDurability -= amount;
+		this.CurrentDurability -= amount;
 
 #if UNITY_EDITOR
-		Debug.Log(this.name + "'s Health is now = " + this._currentDurability, this);
+		Debug.Log(this.name + "'s Health is now = " + this.CurrentDurability, this);
 #endif
 
 		// if: Current health is depleted
-		if (this._currentDurability <= 0)
+		if (this.CurrentDurability <= 0)
 		{
 			OnDeath();
 		}
